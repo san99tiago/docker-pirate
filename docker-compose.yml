@@ -1,0 +1,14 @@
+version: "1.0"
+
+services:
+  app:
+    image: helloapp
+    environment:
+      MONGO_URL: "mongodb://db:27017/test"
+    depends_on:
+      - mymongodb
+    ports:
+      - "3000:3000"
+
+  mymongodb:
+    image: mongo
