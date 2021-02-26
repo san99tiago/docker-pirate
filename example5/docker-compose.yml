@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  myjenkins:
+    container_name: myjenkins
+    image: jenkins/jenkins:lts
+    user: root
+    environment:
+      MY_NAME: "santi"
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+# To use docker-volume (jenkins_home_1) instead of path-file
+volumes:
+  jenkins_home:
+    name: "jenkins_home_1"
