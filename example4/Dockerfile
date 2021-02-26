@@ -1,9 +1,10 @@
-FROM jenkins/jenkins
+FROM jenkins/jenkins:lts
 
 USER root
 
+# Get custom nodels install (using curl as tool)
 RUN apt-get install -y curl \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && curl -L https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs \
     && curl -L https://www.npmjs.com/install.sh | sh
 
