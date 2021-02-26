@@ -6,7 +6,7 @@ WORKDIR /usr/src
 
 RUN npm install
 
-COPY [".", "/usr/src/"]
+COPY ["index.js", "/usr/src/"]
 
 EXPOSE 3000
 

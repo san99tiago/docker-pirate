@@ -10,8 +10,20 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/usr/src
+      - example3_myhelloapp_volume:/usr/src
       - /usr/src/node_modules
 
   mymongodb:
     image: mongo
+    volumes:
+      - example3_mymongodb_volume:/data/db
+
+volumes:
+  example3_myhelloapp_volume:
+    name: "example3_myhelloapp_volume"
+  example3_mymongodb_volume:
+    name: "example3_mymongodb_volume"
+
+networks:
+  default:
+    name: "example3_network"
