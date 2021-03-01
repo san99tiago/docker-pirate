@@ -11,7 +11,6 @@ services:
       - "3000:3000"
     volumes:
       - example3_myhelloapp_volume:/usr/src
-      - /usr/src/node_modules
 
   mymongodb:
     image: mongo
