@@ -12,8 +12,12 @@ services:
       - "50000:50000"
     volumes:
       - jenkins_home:/var/jenkins_home
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
-# To use docker-volume (jenkins_home_1) instead of path-file
+# To use docker-volume (jenkins_home_pirate) instead of path-file
 volumes:
   jenkins_home:
-    name: "jenkins_home_1"
+    name: "jenkins_home_pirate"
