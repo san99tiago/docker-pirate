@@ -26,4 +26,14 @@ docker-compose up
 
 As we can see, this process is way easier than the manual one. To see correct result, enter [localhost:3000](http://localhost:3000) and it should return "Connection OK!".
 
+Finally, we should be able to stop or completely delete the composed features.<br>
+
+To do so, we run:
+
+```bash
+docker-compose stop
+
+docker-compose down
+```
+
 ---
