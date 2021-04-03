@@ -3,13 +3,37 @@ version: "3.8"
 services:
   flask_app:
     container_name: my_flask_app
-    build: .
+    build:
+      context: ./app/
     ports:
       - "5000:5000"
     environment:
       FLASK_ENV: development
+    depends_on:
+      - mysql_db
     networks:
       - net_flask_app
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+  mysql_db:
+    container_name: my_mysql_db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+    ports:
+      - "33061:3306"
+    volumes:
+      - mysql_db_vol:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - net_flask_app
+    security_opt:
+      - seccomp:unconfined
     deploy:
       resources:
         limits:
@@ -19,3 +43,7 @@ networks:
   net_flask_app:
     driver: bridge
     name: net_flask_app
+
+volumes:
+  mysql_db_vol:
+    name: "mysql_db_vol_1"
