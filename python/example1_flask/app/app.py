@@ -1,40 +1,19 @@
-from flask import Flask, flash, redirect, render_template, request, session, abort
+import os
+from flask import Flask
+from flask_restful import Api, Resource
+
 app = Flask(__name__)
+api = Api(app)
 
 
-@app.route("/", strict_slashes=False)
-def index():
-    return "Hello my friend, this is the index!"
+class DevelopersApi(Resource):
+    def get(self, id):
+        return{"data": id}
 
 
-@app.route("/members", strict_slashes=False)
-def get_members():
-    """
-    Method to "simulate/test" a REST-API to get all members
-    """
-
-    return "[{\"id\":\"1\", \"name\":\"Santiago\", \"lastname\":\"Garcia\"}, \
-        {\"id\":\"2\", \"name\":\"Monica\", \"lastname\":\"Hill\"}]"
-
-
-@app.route("/members/<int:id>", strict_slashes=False)
-def get_member_by_id(id):
-    """
-    Method to "simulate/test" a REST-API to get specific member
-    """
-    if (id == 1):
-        return "{\"id\":\"1\", \"name\":\"Santiago\", \"lastname\":\"Garcia\"}"
-    elif (id == 2):
-        return "{\"id\":\"2\", \"name\":\"Monica\", \"lastname\":\"Hill\"}"
-    else:
-        return "Member with id {} not found.".format(id)
-
-
-@app.route("/hello/<string:name>/", strict_slashes=False)
-def hello(name):
-    return render_template(
-        'hello.html', name=name)
-
+api.add_resource(DevelopersApi, *["/developers/<string:id>", "/developer/<string:id>"])
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", debug=False)
+    host = os.getenv('FLASK_RUN_HOST', '0.0.0.0')
+    port = os.getenv('FLAS_RUN_PORT', 5000)
+    app.run(host=host, port=port, debug=True)
