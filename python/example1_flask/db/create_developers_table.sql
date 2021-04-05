@@ -13,9 +13,11 @@ USE employees;
 -- Structure for the database: `developers`
 --
 CREATE TABLE `developers` (
-    `id` int  NOT NULL AUTO_INCREMENT,
+    `id` int NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `lastname` varchar(255) NOT NULL,
+    `id_type` varchar(255) NOT NULL,
+    `id_value` varchar(255) NOT NULL,
     `area` varchar(255) NOT NULL,
     `age` int NOT NULL,
     PRIMARY KEY (`id`)
@@ -23,9 +25,16 @@ CREATE TABLE `developers` (
 --
 -- Add some sample data for the data of table: `developers`
 --
-INSERT INTO `developers` (`name`, `lastname`, `area`, `age`)
-VALUES ('Santiago', 'Garcia', 'DevOps', 21),
-    ('Monica', 'Hill', 'Data Science', 22),
-    ('Elkin', 'Guerra', 'Robotics', 30),
-    ('Melissa', 'Mejia', 'Web', 40);
+INSERT INTO `developers` (
+        `name`,
+        `lastname`,
+        `id_type`,
+        `id_value`,
+        `area`,
+        `age`
+    )
+VALUES ('Santiago', 'Garcia', 'cc', '1234', 'DevOps', 21),
+    ('Monica', 'Hill', 'cc', '2222', 'ML', 22),
+    ('Elkin', 'Guerra', 'cc', '4321', 'Robotics', 30),
+    ('Melissa', 'Mejia', 'cc', '3333', 'Web', 40);
 COMMIT;
