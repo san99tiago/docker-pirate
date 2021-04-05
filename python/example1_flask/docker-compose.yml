@@ -8,7 +8,9 @@ services:
     ports:
       - "5000:5000"
     environment:
-      FLASK_ENV: development
+      - FLASK_ENV=development
+      - DB_PORT=3306
+      - DB_HOST=mysql_db
     depends_on:
       - mysql_db
     networks:
@@ -25,15 +27,18 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PASSWORD: root
+      MYSQL_ROOT_HOST: "%"
+    expose:
+      - "3306"
     ports:
-      - "33061:3306"
+      - "3306:3306"
     volumes:
       - mysql_db_vol:/var/lib/mysql
       - ./db:/docker-entrypoint-initdb.d
     networks:
       - net_flask_app
-    security_opt:
-      - seccomp:unconfined
+    # security_opt:
+    #   - seccomp:unconfined
     deploy:
       resources:
         limits:
