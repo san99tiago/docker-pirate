@@ -41,6 +41,13 @@ class DevelopersORM(peewee.Model):
             age=args["age"]
         ).execute()
 
+    def get_all_developers(self):
+        query = DevelopersORM.select()
+        results = []
+        for dev in query:
+            results.append(model_to_dict(dev))
+        return results
+
     def get_developer_by_id_params(self, id_type, id_value):
         results = DevelopersORM.select().where(
             DevelopersORM.id_type == id_type,

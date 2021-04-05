@@ -17,7 +17,7 @@ api = Api(app)
 developer_parser = developers_parser.create_developers_request_parser()
 
 
-class DevelopersApi(Resource):
+class SpecificDeveloperApi(Resource):
     def __init__(self):
         self.devs = developers_orm.DevelopersORM()
 
@@ -59,14 +59,30 @@ class DevelopersApi(Resource):
         if (args["id_type"] != id_type or args["id_value"] != id_value):
             abort(404, message="Path and Body parameters do not match.")
 
-# Specify path for the API endpoint
+class AllDevelopersApi(Resource):
+    def __init__(self):
+        self.devs = developers_orm.DevelopersORM()
+
+    def get(self):
+        return self.devs.get_all_developers(), 200
+
+# Path for the API endpoint to specific developers based on id params
 api.add_resource(
-    DevelopersApi,
+    SpecificDeveloperApi,
     *[
         "/developers/<string:id_type>/<string:id_value>",
         "/developer/<string:id_type>/<string:id_value>"
     ]
 )
+
+# Path for the API endpoint to all developers
+api.add_resource(
+    AllDevelopersApi,
+    *[
+        "/developers"
+    ]
+)
+
 
 if __name__ == "__main__":
     host = os.getenv('FLASK_RUN_HOST', '0.0.0.0')
