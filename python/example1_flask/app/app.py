@@ -29,7 +29,7 @@ class DevelopersApi(Resource):
         args = developer_parser.parse_args()
         self.abort_if_params_do_not_match(id_type, id_value, args)
         self.abort_if_developer_exists(id_type, id_value)
-        if (self.devs.create_developer(args) > 1):
+        if (self.devs.create_developer(args) > 0):
             return {"message": "Created correctly"}, 201
         return {"message": "Error at the creation"}, 404
 
@@ -37,14 +37,14 @@ class DevelopersApi(Resource):
         args = developer_parser.parse_args()
         self.abort_if_params_do_not_match(id_type, id_value, args)
         self.abort_if_developer_does_not_exist(id_type, id_value)
-        if (self.devs.update_developer(args) > 1):
+        if (self.devs.update_developer(args) > 0):
             return {"message": "Updated correctly"}, 201
         return {"message": "Nothing to update"}, 200
 
     def delete(self, id_type, id_value):
         self.abort_if_developer_does_not_exist(id_type, id_value)
-        if (self.devs.delete_developer_by_id_params(id_type, id_value) > 1):
-            return {"message": "Deleted ok."}, 204
+        if (self.devs.delete_developer_by_id_params(id_type, id_value) > 0):
+            return {"message": "Deleted ok"}, 204
         return {"message": "Error at the delete"}, 404
 
     def abort_if_developer_exists(self, id_type, id_value):
