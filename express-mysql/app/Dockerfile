@@ -14,8 +14,11 @@ WORKDIR /usr/src
 
 RUN npm install
 
-COPY ["index.js", "/usr/src/"]
+COPY ["app.js", "/usr/src/"]
+COPY ["./config/db.config.js", "/usr/src/config/"]
+COPY ["./db/model.js", "/usr/src/db/"]
+COPY ["./routes/developers.js", "/usr/src/routes/"]
 
 EXPOSE ${app_port}
 
-CMD ["node", "index.js"]
+CMD ["node", "app.js"]

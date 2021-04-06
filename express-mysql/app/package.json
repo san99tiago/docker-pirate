@@ -2,10 +2,10 @@
   "name": "docker-pirate-amazing-rest-api-example",
   "version": "1.0.0",
   "description": "Simple REST-API with Express.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "node": "node index.js",
-    "nodemon": "nodemon index.js",
+    "node": "node app.js",
+    "nodemon": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

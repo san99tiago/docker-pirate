@@ -11,8 +11,6 @@ services:
       - "3000:3000"
     depends_on:
       - mysql_db
-    depends_on:
-      - mysql_db
     networks:
       - docker_pirate_net
     restart: on-failure
