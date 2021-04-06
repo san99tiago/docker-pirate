@@ -59,12 +59,14 @@ class SpecificDeveloperApi(Resource):
         if (args["id_type"] != id_type or args["id_value"] != id_value):
             abort(404, message="Path and Body parameters do not match.")
 
+
 class AllDevelopersApi(Resource):
     def __init__(self):
         self.devs = developers_orm.DevelopersORM()
 
     def get(self):
         return self.devs.get_all_developers(), 200
+
 
 # Path for the API endpoint to specific developers based on id params
 api.add_resource(
@@ -86,5 +88,5 @@ api.add_resource(
 
 if __name__ == "__main__":
     host = os.getenv('FLASK_RUN_HOST', '0.0.0.0')
-    port = os.getenv('FLAS_RUN_PORT', 5000)
+    port = os.getenv('FLASK_RUN_PORT', 5000)
     app.run(host=host, port=port, debug=True)
