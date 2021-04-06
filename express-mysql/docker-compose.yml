@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  express_rest_api:
+    container_name: my_express_rest_api
+    build: ./app/
+    environment:
+      - DB_PORT=3306
+      - DB_HOST=mysql_db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql_db
+    volumes:
+      - docker_pirate_express_rest_api_volume:/usr/src
+    depends_on:
+      - mysql_db
+    networks:
+      - docker_pirate_net
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+  mysql_db:
+    container_name: my_mysql_db
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_HOST: "%"
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    volumes:
+      - docker_pirate_mysql_db_volume:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - docker_pirate_net
+    # security_opt:
+    #   - seccomp:unconfined
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+volumes:
+  docker_pirate_express_rest_api_volume:
+    name: "docker_pirate_express_rest_api_volume"
+  docker_pirate_mysql_db_volume:
+    name: "docker_pirate_mysql_db_volume"
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
