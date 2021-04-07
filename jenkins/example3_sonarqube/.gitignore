@@ -1,0 +1,2 @@
+# Ignore local folder to store sonarqube docker container
+sonarqube_home
