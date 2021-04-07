@@ -38,7 +38,7 @@ router.post("/developers/:id_type/:id_value", (req, res) => {
     console.log("Body parameters must have valid values");
     res
       .status(404)
-      .send('{"message":"Body parameters must have valid values"}');
+      .json({"message":"Body parameters must have valid values"});
     return;
   }
 
@@ -46,7 +46,7 @@ router.post("/developers/:id_type/:id_value", (req, res) => {
     console.log("Path and body parameters did not match");
     res
       .status(404)
-      .send('{"message":"Path and body parameters did not match"}');
+      .json({"message":"Path and body parameters did not match"});
     return;
   }
 
@@ -61,7 +61,7 @@ router.put("/developers/:id_type/:id_value", (req, res) => {
     console.log("Body parameters must have valid values");
     res
       .status(404)
-      .send('{"message":"Body parameters must have valid values"}');
+      .json({"message":"Body parameters must have valid values"});
     return;
   }
 
@@ -69,7 +69,7 @@ router.put("/developers/:id_type/:id_value", (req, res) => {
     console.log("Path and body parameters did not match");
     res
       .status(404)
-      .send('{"message":"Path and body parameters did not match"}');
+      .json({"message":"Path and body parameters did not match"});
     return;
   }
 

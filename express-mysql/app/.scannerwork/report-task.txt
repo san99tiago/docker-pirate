@@ -1,0 +1,6 @@
+projectKey=SuperSimpleExpressExample:Test
+serverUrl=http://localhost:9000
+serverVersion=7.9.5.38598
+dashboardUrl=http://localhost:9000/dashboard?id=SuperSimpleExpressExample%3ATest
+ceTaskId=AXiuhu3j-uYHeCI5YsCW
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXiuhu3j-uYHeCI5YsCW
