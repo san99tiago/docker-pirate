@@ -9,6 +9,7 @@ services:
       MY_NAME: "santi_devops"
       # Gmail extra configuration for mailer plugin
       JAVA_OPTS: "-Djava.awt.headless=true -Dmail.smtp.starttls.enable=true"
+      SONARQUBE_HOST: mysonarqube
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -22,7 +23,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.50"
+          cpus: "2"
           memory: 2G
   mysonarqube:
     container_name: my_custom_sonarqube
@@ -43,7 +44,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.50"
+          cpus: "2"
           memory: 3G
 
 # To use docker-volume (custom_jenkins_home) instead of a directory path-file
