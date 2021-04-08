@@ -6,8 +6,12 @@
   "scripts": {
     "node": "node app.js",
     "nodemon": "nodemon app.js",
-    "test": "mocha",
+    "test": "mocha --exit",
+    "coverage": "nyc --reporter=lcov npm run test",
     "sonar": "node sonar-project.js"
+  },
+  "nyc": {
+    "exclude": "**/model.js"
   },
   "keywords": [
     "express",
@@ -25,6 +29,8 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
-    "mocha": "^8.3.2"
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
+    "sinon": "^10.0.1"
   }
 }

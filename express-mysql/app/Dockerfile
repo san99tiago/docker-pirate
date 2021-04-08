@@ -25,9 +25,6 @@ COPY ["./config/db.config.js", "/usr/src/config/"]
 COPY ["./db/model.js", "/usr/src/db/"]
 COPY ["./routes/developers.js", "/usr/src/routes/"]
 
-# # Add app tests
-# COPY ["./test/mainTest.js", "/usr/src/test/"]
-
 EXPOSE ${app_port}
 
 CMD ["node", "app.js"]

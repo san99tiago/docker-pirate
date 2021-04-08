@@ -8,9 +8,9 @@ sonarqubeScanner(
       "sonar.projectVersion": "0.0.1",
       "sonar.projectDescription": "A simple app to apply a SonarQube",
       "sonar.projectKey": "SuperSimpleExpressExample:Test",
-      "sonar.sources": "./app.js, ./db/model.js, ./config/db.config.js, ./routes/developers.js",
+      "sonar.sources": "./app.js, ./config/db.config.js, ./routes/developers.js",
       "sonar.tests": "./test",
-      "sonar.javascript.lcov.reportPaths": "reports/js/lcov.dat",
+      "sonar.javascript.lcov.reportPaths": "./coverage/lcov.info",
       // "sonar.inclusions": "./", // Entry point of your code
     },
   },
