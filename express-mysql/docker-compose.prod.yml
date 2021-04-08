@@ -1,0 +1,5 @@
+version: "3.8"
+
+services:
+  express_rest_api:
+    image: san99tiago/docker-pirate-express
