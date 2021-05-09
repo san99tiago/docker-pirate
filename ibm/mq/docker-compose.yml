@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  ibm_mq_santi_data:
+    container_name: my_ibm_mq_santi_data
+    image: ibmcom/mq
+    environment:
+      - LICENSE=accept
+      - MQ_QMGR_NAME=santi_data # Queue Manager name
+      - MQ_APP_PASSWORD=passw0rd # Password for the app-user
+    ports:
+      - "1414:1414"
+      - "9443:9443"
+    volumes:
+      - docker_pirate_ibm_mq_vol:/mnt/mqm
+    networks:
+      - docker_pirate_net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+volumes:
+  docker_pirate_ibm_mq_vol:
+    name: docker_pirate_ibm_mq_vol
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
