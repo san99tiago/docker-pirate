@@ -76,3 +76,69 @@ target/liberty/wlp/usr/servers/defaultServer/logs
 
 To enable them, we can this in the server.xml (for desired package):
 <logging traceSpecification="com.ibm.ws.microprofile.health.*=all" />
+
+# Running OpenLiberty Microservice with Docker
+
+## Creating the .war file
+
+First of all, it is mandatory to create the ".war" file, with the following
+command (using maven at the same level as the pom.xml):
+
+```bash
+mvn package
+```
+
+## Alternative 1: classic Docker image approach
+
+We can build the Docker image with the Dockerfile, like this:
+
+```bash
+docker build -t openliberty-getting-started-santi:1.0-SNAPSHOT .
+```
+
+This will create the Docker image and we could then run the container with:
+
+```bash
+docker run -d --name ol-santi-microservice -p 9081:9081 openliberty-getting-started-santi:1.0-SNAPSHOT
+```
+
+To stop the container and remove it, we can do it with:
+
+```bash
+docker stop ol-santi-microservice
+```
+
+```bash
+docker rm -f ol-santi-microservice
+```
+
+To remove the created Docker image, we can run:
+
+```bash
+docker rmi openliberty-getting-started-santi:1.0-SNAPSHOT
+```
+
+## Alternative 2: Docker-Compose approach
+
+We can achieve the same results in a more "elegant" way with docker-compose.<br>
+
+We can check the "docker-compose.yml" file, and see its configurations.<br>
+
+To run the Microservice with Docker-Compose, we run:
+
+```bash
+docker-compose up --build
+```
+
+We can start/stop it with:
+
+```bash
+docker-compose start
+docker-compose stop
+```
+
+We can remove it completely with:
+
+```bash
+docker-compose down
+```

@@ -8,7 +8,7 @@
         <feature>mpConfig-1.4</feature>
     </featureManager>
 
-    <variable name="default.http.port" defaultValue="9080"/>
+    <variable name="default.http.port" defaultValue="9081"/>
     <variable name="default.https.port" defaultValue="9443"/>
 
     <webApplication location="guide-getting-started.war" contextRoot="/" />
