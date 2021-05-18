@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  ibm_was_traditional:
+    container_name: my_ibm_was_traditional
+    build: .
+    environment:
+      - UPDATE_HOSTNAME=true
+      - PROFILE_NAME=AppSrv01
+      - NODE_NAME=DefaultNode01
+      - SERVER_NAME=server1
+    ports:
+      - "9043:9043"
+      - "9443:9443"
+    # volumes:
+    #   - docker_pirate_ibm_was_traditional:/tmp/PASSWORD
+    networks:
+      - docker_pirate_net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+# volumes:
+#   docker_pirate_ibm_was_traditional:
+#     name: docker_pirate_ibm_was_traditional
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
