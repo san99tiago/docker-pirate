@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  ubuntu:
+    container_name: my_ubuntu
+    image: ubuntu
+    command: ["sleep", "infinity"]
+    environment:
+      - LANG=C.UTF-8
+    networks:
+      - docker_pirate_net
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
