@@ -18,5 +18,5 @@ PyMySQL==1.0.2
 pytz==2021.1
 six==1.15.0
 toml==0.10.2
-urllib3==1.26.4
+urllib3>=1.26.5
 Werkzeug==1.0.1
