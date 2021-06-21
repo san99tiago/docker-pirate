@@ -1,4 +1,4 @@
-# HOW TO RUN MQ CORRECTLY
+# GENERAL MQ TIPS AND INFO
 
 ## Overall functionalities explained
 
@@ -55,6 +55,22 @@ dspmqver
 dspmq
 ```
 
-### Enter browser to IBM-MQ console
+```bash
+dspmq -o all
+```
 
-* https://localhost:9443/ibmmq/console
+### Starting/Stopping MQ
+
+```bash
+strmqm santi_data
+```
+
+```bash
+endmqm santi_data
+```
+
+## Deleting MQ
+
+```bash
+dltmqm santi_data
+```
