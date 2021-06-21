@@ -3,10 +3,10 @@ version: "3.8"
 services:
   ibm_mq_santi_data:
     container_name: my_ibm_mq_santi_data
-    image: ibmcom/mq
+    build: .
     environment:
       - LICENSE=accept
-      - MQ_QMGR_NAME=santi_data # Queue Manager name
+      - MQ_QMGR_NAME=QM1 # Queue Manager name
       - MQ_APP_PASSWORD=passw0rd # Password for the app-user
     ports:
       - "1414:1414"

@@ -62,15 +62,15 @@ dspmq -o all
 ### Starting/Stopping MQ
 
 ```bash
-strmqm santi_data
+strmqm QM1
 ```
 
 ```bash
-endmqm santi_data
+endmqm QM1
 ```
 
 ## Deleting MQ
 
 ```bash
-dltmqm santi_data
+dltmqm QM1
 ```
