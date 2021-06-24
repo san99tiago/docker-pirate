@@ -24,6 +24,7 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
+    "normalize-url": "^6.1.0",
     "sonarqube-scanner": "^2.8.0"
   },
   "devDependencies": {
