@@ -22,10 +22,14 @@ services:
   app_santi:
     container_name: my_app_santi
     build: ./app/
-    networks:
-      - docker_pirate_net
+    environment:
+      # Environment variables to authenticate to Java app for connecting to MQ
+      - APP_USER=app
+      - APP_PASSWORD=passw0rd
     depends_on:
       - ibm_mq_santi_data
+    networks:
+      - docker_pirate_net
     deploy:
       resources:
         limits:
