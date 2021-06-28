@@ -32,7 +32,7 @@ correct functionalities of the Queue Manager on the container. <br>
 The service called "app_santi" is a simple Java application that will be 
 running inside another container and depends on the IBM Queue defined on the 
 other service, to run properly. The application will be creating a 
-"point-to-point" message structure to the queue called "DEV.QUEUE.1" via the 
+"point-to-point" message structure to the queue called "DEV.SANTI.QL.1" via the 
 given authentication methods and the channel "DEV.APP.SVRCONN".<br>
 
 One important remark is that the Java application will be running "endlessly" 
@@ -40,7 +40,7 @@ and will add (and read) random messages to the queue at a constant rate.<br>
 
 We can verify the correct functionalities by checking the logs of the java 
 application or by going to the [IBM Console](https://localhost:9443/ibmmq/console) 
-and checking the messages of the "DEV.QUEUE.1" (they should change constantly 
+and checking the messages of the "DEV.SANTI.QL.1" (they should change constantly 
 with the random messages generated at the app). <br>
 
 The messages added/deleted to the queue, should look like this one:
