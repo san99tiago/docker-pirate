@@ -59,7 +59,7 @@ dspmq
 dspmq -o all
 ```
 
-### Starting/Stopping MQ
+### Starting/Stopping MQ manually
 
 ```bash
 strmqm QM1
@@ -69,7 +69,7 @@ strmqm QM1
 endmqm QM1
 ```
 
-## Deleting MQ
+### Deleting MQ manually
 
 ```bash
 dltmqm QM1

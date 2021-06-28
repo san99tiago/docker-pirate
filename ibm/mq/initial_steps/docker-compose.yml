@@ -3,7 +3,7 @@ version: "3.8"
 services:
   ibm_mq_santi_data:
     container_name: my_ibm_mq_santi_data
-    build: .
+    build: ./mq/
     environment:
       - LICENSE=accept
       - MQ_QMGR_NAME=QM1 # Queue Manager name
@@ -12,9 +12,20 @@ services:
       - "1414:1414"
       - "9443:9443"
     # volumes:
-      # - docker_pirate_ibm_mq_vol:/mnt/mqm
+    # - docker_pirate_ibm_mq_vol:/mnt/mqm
     networks:
       - docker_pirate_net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+  app_santi:
+    container_name: my_app_santi
+    build: ./app/
+    networks:
+      - docker_pirate_net
+    depends_on:
+      - ibm_mq_santi_data
     deploy:
       resources:
         limits:
