@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="AdminCenter Server By Santi">
+
+    <featureManager>
+        <!-- Features for AdminCenter -->
+        <feature>adminCenter-1.0</feature>
+        <feature>websocket-1.1</feature>
+    </featureManager>
+
+    <!-- Add one or more users to configure a secure login -->
+    <quickStartSecurity userName="admin" userPassword="adminpwd" />
+
+    <!-- Configure administrative roles required to access the Admin Center -->
+    <administrator-role>
+        <user>admin</user>
+    </administrator-role>
+    <reader-role>
+        <user>reader</user>
+    </reader-role>
+    <basicRegistry realm="basicRealm">
+        <user name="admin" password="adminpwd" />
+        <user name="reader" password="readerpwd" />
+    </basicRegistry>
+    <remoteFileAccess>
+        <writeDir>${server.config.dir}</writeDir>
+    </remoteFileAccess>
+
+    <!-- To protect keystore files that have server authentication credentials, define a keystore and assign it a password -->
+    <keyStore id="defaultKeyStore" password="Liberty" />
+
+    <!-- Variables for the http and https ports -->
+    <variable name="default.http.port" defaultValue="9081" />
+    <variable name="default.https.port" defaultValue="9443" />
+
+    <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint" host="*" />
+
+</server>
