@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="JMS Client by IBM MQ Resource Adapter">
+
+    <featureManager>
+        <!-- Features for JMS (and IBM MQ Resource Adapter) -->
+        <feature>jms-2.0</feature>
+        <feature>mdb-3.2</feature>
+        <feature>wmqJmsClient-2.0</feature>
+    </featureManager>
+
+    <!-- Specify the location of the IBM MQ Resource Adapter (downloaded from IBM MQ) -->
+    <variable name="wmqJmsClient.rar.location" value="/config/wmq.jmsra.rar"/>
+    
+    <!-- Variables for the http and https ports -->
+    <variable name="default.http.port" defaultValue="9081" />
+    <variable name="default.https.port" defaultValue="9443" />
+
+    <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}" id="defaultHttpEndpoint" host="*" />
+</server>

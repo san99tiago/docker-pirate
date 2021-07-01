@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  was_liberty_with_jms:
+    container_name: my_was_liberty_with_jms
+    build: .
+    ports:
+      - "9081:9081"
+      - "9443:9443"
+    networks:
+      - docker_pirate_net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
