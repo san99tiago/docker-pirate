@@ -1,7 +1,7 @@
 import requests
 
 BASE_URL = "http://localhost:5000/"
-body = {
+body_1 = {
     "name": "Camila",
     "lastname": "Yepes Ruiz",
     "id_type": "cc",
@@ -10,11 +10,24 @@ body = {
     "age": 22
 }
 
+body_2 = {
+    "name": "Camila",
+    "lastname": "Yepes Ruiz",
+    "id_type": "cc",
+    "id_value": "4444",
+    "area": "DevOps",
+    "age": 22
+}
+
 response = requests.get(BASE_URL + "developers/cc/0000")
 print(response.json())
 print(response.status_code)
 
-response = requests.put(BASE_URL + "developers/cc/4444", body)
+response = requests.post(BASE_URL + "developers/cc/4444", body_1)
+print(response.json())
+print(response.status_code)
+
+response = requests.put(BASE_URL + "developers/cc/4444", body_2)
 print(response.json())
 print(response.status_code)
 
