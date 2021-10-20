@@ -6,9 +6,9 @@ services:
     build: .
     environment:
       - UPDATE_HOSTNAME=true
-      - PROFILE_NAME=AppSrv01
-      - NODE_NAME=DefaultNode01
-      - SERVER_NAME=server1
+      - PROFILE_NAME=AWSCell01
+      - NODE_NAME=AWSPFNA01
+      - SERVER_NAME=ASAWS01
     ports:
       - "9043:9043"
       - "9443:9443"
