@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  flask_app:
+    container_name: my_flask_app
+    build:
+      context: ./app/
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - DB_HOST=#{mysql-db-host}#
+      - DB_PORT=3306
+      - DB_USER=#{mysql-db-user}#
+      - DB_PASSWORD=#{mysql-db-password}#
+    networks:
+      - net_flask_app
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+networks:
+  net_flask_app:
+    driver: bridge
+    name: net_flask_app
+

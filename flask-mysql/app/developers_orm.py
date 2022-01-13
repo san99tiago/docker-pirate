@@ -8,10 +8,9 @@ database = peewee.MySQLDatabase(
     "employees",
     host=os.getenv("DB_HOST", "localhost"),
     port=int(os.getenv("DB_PORT", 3306)),
-    user="root",
-    password="root"
+    user=(os.getenv("DB_USER", "root")),
+    password=(os.getenv("DB_PASSWORD", "root"))
 )
-
 
 class DevelopersORM(peewee.Model):
     name = peewee.CharField(255)
@@ -113,3 +112,5 @@ if __name__ == "__main__":
     print("delete(cc, 1234): ", devs.delete_developer_by_id_params("cc", "1234"))
 
     print("exists(cc, 1234): ", devs.developer_exists("cc", "1234"))
+
+    print("create(cc, 1234): ", devs.create_developer(args))
