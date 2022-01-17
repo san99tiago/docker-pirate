@@ -86,15 +86,15 @@ dspmq -o all
 ### Starting/Stopping MQ manually
 
 ```bash
-strmqm QM1
+strmqm MY_QMGR_DEV
 ```
 
 ```bash
-endmqm QM1
+endmqm MY_QMGR_DEV
 ```
 
 ### Deleting MQ manually
 
 ```bash
-dltmqm QM1
+dltmqm MY_QMGR_DEV
 ```

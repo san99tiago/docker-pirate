@@ -6,11 +6,13 @@ services:
     build: ./mq/
     environment:
       - LICENSE=accept
-      - MQ_QMGR_NAME=QM1 # Queue Manager name
+      - MQ_QMGR_NAME=MY_QMGR_DEV # Queue Manager name
       - MQ_APP_PASSWORD=passw0rd # Password for the app-user
+      - MQ_ENABLE_METRICS=true # To enable Prometheus metrics (port 9157)
     ports:
       - "1414:1414"
       - "9443:9443"
+      - "9157:9157" # Prometheus port (only when metrics are enabled)
     # volumes:
     # - docker_pirate_ibm_mq_vol:/mnt/mqm
     networks:
