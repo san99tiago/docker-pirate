@@ -22,7 +22,7 @@ current state of the WAS.<br>
 
 To enter to the login page, we can go to the following path in our browser:
 
-- https://localhost:9043/ibm/console/login.do
+- https://localhost:9043/ibm/console
 
 The user is **wsadmin** and the password can be retrieved from the container...<br>
 
