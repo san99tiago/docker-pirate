@@ -5,10 +5,11 @@ services:
     container_name: my_ibm_was_traditional
     build: .
     environment:
-      - UPDATE_HOSTNAME=true
-      - PROFILE_NAME=AppSrv01 #AWSCell01
-      - NODE_NAME=DefaultNode01 #AWSPFNA01
-      - SERVER_NAME=server1 #ASAWS01
+      UPDATE_HOSTNAME: "true"
+      PROFILE_NAME: "AppSrv01"
+      NODE_NAME: "DefaultNode01"
+      SERVER_NAME: "server1"
+      OWNER: "san99tiago"
     ports:
       - "9043:9043"
       - "9443:9443"
