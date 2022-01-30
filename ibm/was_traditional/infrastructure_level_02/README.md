@@ -52,7 +52,28 @@ And here, we should see these (Custom Properties orchestrated by our own files):
 
 - trusthostheaderport=true
 - com.ibm.ws.webcontainer.extractHostHeaderPort=true
+- com.ibm.ws.webcontainer.disablexPoweredBy=true
 
 At this point, we are able to play with our servers with Jython files (executed by wsadmin tool) and Bash scripting with Shell files.
+
+To interact with wsadmin.sh inside the container, we can execute:
+
+```bash
+docker exec -it my_ibm_was_traditional bash
+```
+
+And then, run:
+
+```bash
+wsadmin.sh -lang jython -user wsadmin -password $(cat /tmp/passwordupdated)
+```
+
+This will start a SOAP connection with WSADMIN scripting language, based on the default user and its password.
+
+To run a file, you can run:
+
+```bash
+wsadmin.sh -lang jython -user wsadmin -password $(cat /tmp/passwordupdated) -f /tmp/path_to_file
+```
 
 > Now we can configure the server however we want!

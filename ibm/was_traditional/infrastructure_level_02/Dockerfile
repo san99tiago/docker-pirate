@@ -1,5 +1,7 @@
 FROM ibmcom/websphere-traditional:latest
 
+LABEL maintainer="Santiago Garcia Arango [san99tiago]"
+
 # Add extra logging configuration
 ENV ENABLE_BASIC_LOGGING=true
 
@@ -10,3 +12,5 @@ RUN /tmp/add_jre_to_path.sh
 # Add config files for WAS
 COPY --chown=was:root ["add_custom_properties_web_container.py", "/work/config/"]
 RUN /work/configure.sh /work/config/add_custom_properties_web_container.py
+
+RUN /work/configure.sh
