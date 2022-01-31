@@ -9,6 +9,12 @@ To run the IBM WAS example, we can execute:
 docker-compose up --build
 ```
 
+If you ever need for force the build, without cache and extra logs, you can run:
+
+```bash
+docker-compose --verbose build --no-cache
+```
+
 To end the Websphere Application Server, we run:
 
 ```bash
