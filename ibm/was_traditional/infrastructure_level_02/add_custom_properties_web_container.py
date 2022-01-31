@@ -22,4 +22,5 @@ print("Creating 'trusthostheaderport' property in Custom Properties...")
 AdminConfig.create('Property', web_container_id, '[[validationExpression ""] [name "trusthostheaderport"] [description "Property to keep port after response"] [value "true"] [required "false"]]')
 print("Creating 'com.ibm.ws.webcontainer.disablexPoweredBy' property in Custom Properties...")
 AdminConfig.create('Property', web_container_id, '[[validationExpression ""] [name "com.ibm.ws.webcontainer.disablexPoweredBy"] [description "Property to disable X-Powered-By header in response"] [value "true"] [required "false"]]')
+
 AdminConfig.save()
