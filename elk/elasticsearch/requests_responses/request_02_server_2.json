@@ -1,0 +1,9 @@
+{
+  "host": "127.0.0.1",
+  "cloud": "GCP",
+  "OS": "Linux",
+  "owner": "Santiago Garcia",
+  "server_name": "Amazing server 2",
+  "type": "INFO",
+  "value": "Discipline, will sooner of later, defeat intelligence."
+}
