@@ -1,0 +1,14 @@
+{
+  "_index": "servers",
+  "_type": "_doc",
+  "_id": "RFI_8H4BLotPbkVjWIQP",
+  "_version": 1,
+  "result": "created",
+  "_shards": {
+      "total": 2,
+      "successful": 1,
+      "failed": 0
+  },
+  "_seq_no": 2,
+  "_primary_term": 1
+}
