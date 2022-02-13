@@ -33,3 +33,11 @@ And then, we can see the elasticsearch processes with:
 ```bash
 ps -fea | grep -v grep | grep -i elastic
 ```
+
+## Postman collection to play with elasticsearch
+
+Feel free to open the `ELASTICSEARCH_1.postman_collection.json` and have some fun with different HTTP methods that interact with elasticsearch functionalities.
+
+<br>
+
+Some sample requests and responses are saved in `requests_responses` directory.

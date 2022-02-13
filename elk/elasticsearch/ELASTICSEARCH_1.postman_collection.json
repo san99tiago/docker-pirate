@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "a503ec90-ae21-427c-b206-40cb27caf196",
+		"name": "ELASTICSEARCH_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET SERVERS GENERAL MAPPINGS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVER 1 INFO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"host\": \"127.0.0.1\",\r\n    \"cloud\": \"AWS\",\r\n    \"OS\": \"Linux\",\r\n    \"owner\": \"Santiago Garcia\",\r\n    \"server_name\": \"Amazing server 1\",\r\n    \"type\": \"INFO\",\r\n    \"value\": \"This is a sample message from a simulated server, have fun and keep studying hard my friends.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVER 2 NFO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"host\": \"127.0.0.1\",\r\n    \"cloud\": \"GCP\",\r\n    \"OS\": \"Linux\",\r\n    \"owner\": \"Santiago Garcia\",\r\n    \"server_name\": \"Amazing server 2\",\r\n    \"type\": \"INFO\",\r\n    \"value\": \"Discipline, will sooner of later, defeat intelligence.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVERS 3_4_5 BULK",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"index\": { \"_id\": \"my_server_3\" } }\r\n{ \"host\": \"127.0.0.1\", \"cloud\": \"AWS\", \"OS\": \"Linux\", \"owner\": \"Santiago Garcia\", \"server_name\": \"Amazing server 3\", \"type\": \"INFO\", \"value\": \"Well done is better than well said.\" } \r\n{ \"index\": { \"_id\": \"my_server_4\" } }\r\n{ \"host\": \"127.0.0.1\", \"cloud\": \"GCP\", \"OS\": \"Linux\", \"owner\": \"Santiago Garcia\", \"server_name\": \"Amazing server 4\", \"type\": \"ERROR\", \"value\": \"The master has failed more times than the beginner has ever tried.\" }\r\n{ \"index\": { \"_id\": \"my_server_5\" } }\r\n{ \"host\": \"127.0.0.1\", \"cloud\": \"GCP\", \"OS\": \"Linux\", \"owner\": \"Santiago Garcia\", \"server_name\": \"Amazing server 5\", \"type\": \"INFO\", \"value\": \"Never stop working hard for your dreams.\" }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_bulk",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_bulk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SERVERS INFO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_search",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVER 3 UPDATE INFO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"doc\": {\r\n      \"host\": \"0.0.0.0\",\r\n      \"value\": \"This is an updated message, great job Santi.\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_update/my_server_3",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_update",
+						"my_server_3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE SERVER 5 INFO",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc/my_server_5",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc",
+						"my_server_5"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DNS",
+			"value": "localhost"
+		},
+		{
+			"key": "PORT",
+			"value": "9200"
+		},
+		{
+			"key": "PROTOCOL",
+			"value": "http"
+		}
+	]
+}
