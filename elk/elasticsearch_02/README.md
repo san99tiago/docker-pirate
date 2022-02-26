@@ -41,3 +41,20 @@ Feel free to open the `ELASTICSEARCH_2.postman_collection.json` and have some fu
 <br>
 
 Some sample requests and responses are saved in `requests_responses` directory.
+
+## Common Error
+
+When initializing the container with docker-compose, it is common to see an error similar to this one:
+
+```txt
+ERROR: [1] bootstrap checks failed. You must address the points described in the following [1] lines before starting Elasticsearch.
+exited with code 78.
+```
+
+To solve this problem, you can enter the WSL (or directly open the Linux Distribution), and run:
+
+```bash
+sudo sysctl -w vm.max_map_count=262144
+```
+
+This should remove the bootstrap problem easily.
