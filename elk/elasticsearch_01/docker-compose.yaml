@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  es01:
+    container_name: my_elasticsearch
+    build: .
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - bootstrap.memory_lock=true
+      # - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    # volumes:
+    #   - docker_pirate_elasticsearch_01:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - docker_pirate_net
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+
+# volumes:
+#   docker_pirate_elasticsearch_01:
+#     name: docker_pirate_elasticsearch_01
+
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
