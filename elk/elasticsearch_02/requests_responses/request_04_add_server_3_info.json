@@ -1,0 +1,12 @@
+{
+  "host": "30.3.30.3",
+  "cloud": "GCP",
+  "OS": "Windows",
+  "owner": "Santiago Garcia Arango",
+  "server_name": "Server Test 3",
+  "messageInfo": {
+      "messageType": "ERROR",
+      "messageValue": "There was a weird error, because I'm a Windows server",
+      "date": "2022-02-26T21:45:07Z"
+  }
+}

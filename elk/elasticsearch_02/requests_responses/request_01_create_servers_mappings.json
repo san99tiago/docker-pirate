@@ -1,0 +1,18 @@
+{
+    "mappings": {
+        "properties": {
+            "host": {"type": "text"},
+            "cloud": {"type": "text"},
+            "OS": {"type": "text"},
+            "owner": {"type": "text"},
+            "server_name": {"type": "keyword"},
+            "messageInfo": {
+                "properties": {
+                    "messageType": {"type": "keyword"},
+                    "messageValue": {"type": "text"},
+                    "date": {"type": "date"}
+                }
+            }
+        }
+    }
+}

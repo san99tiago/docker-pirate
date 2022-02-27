@@ -2,6 +2,9 @@
 # Santiago Garcia Arango
 # -----------------------------------------------------------
 
+URL for GET info of elasticsearch:
+http://localhost:9200
+
 URL for GET info of servers structure (mappings + aliases):
 http://localhost:9200/servers
 http://localhost:9200/servers/_mapping
