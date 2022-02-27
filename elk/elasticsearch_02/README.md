@@ -42,6 +42,11 @@ Feel free to open the `ELASTICSEARCH_2.postman_collection.json` and have some fu
 
 Some sample requests and responses are saved in `requests_responses` directory.
 
+
+## Amazing examples
+
+Please explore the special search queries (responses 06, 07, 08) that are in the `requests_responses` file, because we can see the responses with specific "scores" that replicate how a real search engine works and sends the most fittable answers first.
+
 ## Common Error
 
 When initializing the container with docker-compose, it is common to see an error similar to this one:

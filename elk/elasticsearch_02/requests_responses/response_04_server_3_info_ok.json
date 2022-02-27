@@ -1,0 +1,14 @@
+{
+  "_index": "servers",
+  "_type": "_doc",
+  "_id": "IVpmOH8B_PrbAwoJ3gSZ",
+  "_version": 1,
+  "result": "created",
+  "_shards": {
+      "total": 2,
+      "successful": 1,
+      "failed": 0
+  },
+  "_seq_no": 2,
+  "_primary_term": 1
+}

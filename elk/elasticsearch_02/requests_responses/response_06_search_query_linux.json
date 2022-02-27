@@ -1,0 +1,73 @@
+{
+  "took": 432,
+  "timed_out": false,
+  "_shards": {
+      "total": 1,
+      "successful": 1,
+      "skipped": 0,
+      "failed": 0
+  },
+  "hits": {
+      "total": {
+          "value": 3,
+          "relation": "eq"
+      },
+      "max_score": 0.35667494,
+      "hits": [
+          {
+              "_index": "servers",
+              "_type": "_doc",
+              "_id": "H1pgOH8B_PrbAwoJLwQv",
+              "_score": 0.35667494,
+              "_source": {
+                  "host": "10.100.10.100",
+                  "cloud": "AWS",
+                  "OS": "Linux",
+                  "owner": "Santiago Garcia Arango",
+                  "server_name": "Server Test 1",
+                  "messageInfo": {
+                      "messageType": "INFO",
+                      "messageValue": "Correct Initialization",
+                      "date": "2022-02-26T18:28:30Z"
+                  }
+              }
+          },
+          {
+              "_index": "servers",
+              "_type": "_doc",
+              "_id": "IFpgOH8B_PrbAwoJPAQE",
+              "_score": 0.35667494,
+              "_source": {
+                  "host": "20.200.20.200",
+                  "cloud": "AWS",
+                  "OS": "Linux",
+                  "owner": "Santiago Garcia Arango",
+                  "server_name": "Server Test 2",
+                  "messageInfo": {
+                      "messageType": "INFO",
+                      "messageValue": "Bootstrap ended correctly my friends",
+                      "date": "2022-02-26T20:05:10Z"
+                  }
+              }
+          },
+          {
+              "_index": "servers",
+              "_type": "_doc",
+              "_id": "IlpwOH8B_PrbAwoJYATk",
+              "_score": 0.35667494,
+              "_source": {
+                  "host": "30.3.30.3",
+                  "cloud": "GCP",
+                  "OS": "Linux",
+                  "owner": "Santiago Garcia Arango",
+                  "server_name": "Server Test 4",
+                  "messageInfo": {
+                      "messageType": "ERROR",
+                      "messageValue": "Error because I forgot to install the last fixes",
+                      "date": "2022-02-26T22:13:45Z"
+                  }
+              }
+          }
+      ]
+  }
+}
