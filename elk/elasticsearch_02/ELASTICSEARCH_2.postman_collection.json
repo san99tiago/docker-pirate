@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "fb29020b-b01d-4d55-8502-4317461ba3d8",
+		"name": "ELASTICSEARCH_2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET ELASTICSEARCH INFO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT MAPPINGS FOR SERVERS",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mappings\": {\r\n        \"properties\": {\r\n            \"host\": {\"type\": \"text\"},\r\n            \"cloud\": {\"type\": \"text\"},\r\n            \"OS\": {\"type\": \"text\"},\r\n            \"owner\": {\"type\": \"text\"},\r\n            \"server_name\": {\"type\": \"keyword\"},\r\n            \"messageInfo\": {\r\n                \"properties\": {\r\n                    \"messageType\": {\"type\": \"keyword\"},\r\n                    \"messageValue\": {\"type\": \"text\"},\r\n                    \"date\": {\"type\": \"date\"}\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SERVERS GENERAL MAPPINGS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVER 1 INFO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"host\": \"10.100.10.100\",\r\n    \"cloud\": \"AWS\",\r\n    \"OS\": \"Linux\",\r\n    \"owner\": \"Santiago Garcia Arango\",\r\n    \"server_name\": \"Server Test 1\",\r\n    \"messageInfo\": {\r\n        \"messageType\": \"INFO\",\r\n        \"messageValue\": \"Correct Initialization\",\r\n        \"date\": \"2022-02-26T18:28:30Z\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVER 2 INFO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"host\": \"20.200.20.200\",\r\n    \"cloud\": \"AWS\",\r\n    \"OS\": \"Linux\",\r\n    \"owner\": \"Santiago Garcia Arango\",\r\n    \"server_name\": \"Server Test 2\",\r\n    \"messageInfo\": {\r\n        \"messageType\": \"INFO\",\r\n        \"messageValue\": \"Bootstrap ended correctly my friends\",\r\n        \"date\": \"2022-02-26T20:05:10Z\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVER 3 INFO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"host\": \"30.3.30.3\",\r\n    \"cloud\": \"GCP\",\r\n    \"OS\": \"Windows\",\r\n    \"owner\": \"Santiago Garcia Arango\",\r\n    \"server_name\": \"Server Test 3\",\r\n    \"messageInfo\": {\r\n        \"messageType\": \"ERROR\",\r\n        \"messageValue\": \"There was a weird error, because I'm a Windows server\",\r\n        \"date\": \"2022-02-26T21:45:07Z\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST SERVER 4 INFO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"host\": \"30.3.30.3\",\r\n    \"cloud\": \"GCP\",\r\n    \"OS\": \"Linux\",\r\n    \"owner\": \"Santiago Garcia Arango\",\r\n    \"server_name\": \"Server Test 4\",\r\n    \"messageInfo\": {\r\n        \"messageType\": \"ERROR\",\r\n        \"messageValue\": \"Error because I forgot to install the last fixes\",\r\n        \"date\": \"2022-02-26T22:13:45Z\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SERVERS INFO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_search",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SERVERS TEXT SEARCH LINUX",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"simple_query_string\": {\"query\": \"linux\"}\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_search",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SERVERS TEXT SEARCH WINDOWS",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"simple_query_string\": {\"query\": \"windows\"}\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_search",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SERVERS TEXT SEARCH AWS LINUX",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n        \"simple_query_string\": {\"query\": \"aws linux\"}\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_search",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET SERVERS QUERY OS LINUX FILTER IP",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"query\": {\r\n    \"bool\": {\r\n      \"must\": {\r\n        \"match\": {\"OS\": \"Linux\"}\r\n      },\r\n      \"filter\": {\r\n        \"term\": {\"host\": \"10.100.10.100\"}\r\n      }\r\n    }\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_search",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE SERVER STRUCTURE",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{PROTOCOL}}://{{DNS}}:{{PORT}}/servers/_doc/my_server_5",
+					"protocol": "{{PROTOCOL}}",
+					"host": [
+						"{{DNS}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"servers",
+						"_doc",
+						"my_server_5"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DNS",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "PORT",
+			"value": "9200",
+			"type": "string"
+		},
+		{
+			"key": "PROTOCOL",
+			"value": "http",
+			"type": "string"
+		}
+	]
+}
