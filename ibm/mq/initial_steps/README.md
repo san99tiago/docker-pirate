@@ -1,5 +1,13 @@
 # GENERAL MQ TIPS AND INFO
 
+## Super Important Documentation
+
+This tutorials and playgrounds are inspired by:
+
+- (Install IBM MQ in a container | Set up messaging software in 4 minutes)[https://youtu.be/xBX1P9OUteg]
+- (IBM MQ Developer Essentials)[https://developer.ibm.com/learningpaths/ibm-mq-badge/]
+- (GitHub Repo: ibm-messaging/mq-container "developer config")[https://github.com/ibm-messaging/mq-container/blob/master/docs/developer-config.md]
+
 ## Overall functionalities explained
 
 This is a simple IBM MQ (messaging and queuing middleware) with several modes of operation point-to-point, publish/subscribe, file transfer, etc.<br>
@@ -28,6 +36,13 @@ One important remark is that the Java application will be running "endlessly" an
 
 We can verify the correct functionalities by checking the logs of the java application or by going to the [IBM Console](https://localhost:9443/ibmmq/console) and checking the messages of the "DEV.SANTI.QL.1" (they should change constantly with the random messages generated at the app). <br>
 
+Important notes about the "IBM Console" (after running  `docker-compose up --build`, you can play with this example):
+
+- The default url to access the console is: (https://localhost:9443/ibmmq/console).
+- The default user is `admin`.
+- The default password ir `passw0rd`, but with the environment variable `MQ_ADMIN_PASSWORD` in the `docker-compose.yaml`, I changed it to `santi_admin_password`.
+- There is another environment variable called `MQ_ENABLE_EMBEDDED_WEB_SERVER`, that when set to `false`, it disables the MQ-web-server.
+
 The messages added/deleted to the queue, should look like this one:
 
 **Santi says that your lucky number is: 537**
@@ -40,13 +55,31 @@ To stop the containers, we can do it manually or we can run:
 docker-compose down
 ```
 
-## Verifying the IBM MQ
+## Playing with the IBM MQ (inside the container)
 
 To test easy IBM-MQ commands, we can enter the container in an interactive
 approach (with tty activated like this):
 
 ```bash
 docker exec -it my_ibm_mq_santi bash
+```
+
+One important directory to check is `/var/mqm`, because it contains multiple configurations for the MQ server.
+
+The default most common paths to validate logs (and errors) is:
+
+```bash
+# Queue Manager error log directory
+/var/mqm/qmgrs/MY_QMGR_DEV/errors/
+
+# System error and Client error log directories
+/var/mqm/errors/
+```
+
+Another important file is the configuration for the MQ-web-server, which is:
+
+```bash
+/opt/mqm/web/mq/samp/configuration
 ```
 
 This should allow us to enter the container, and now, we can type the following
@@ -82,4 +115,71 @@ endmqm MY_QMGR_DEV
 
 ```bash
 dltmqm MY_QMGR_DEV
+```
+
+### Understanding main Java processes related to the QGMR
+
+To show active IBM MQ processes that can be running on the system, we can run inside the GMQR container the following:
+
+```bash
+ps -fea | grep -i mq
+```
+
+This will show us multiple Linux-based processes (including the mqweb and more)
+
+### Extra Santi's Tip
+
+Please explore the QMGR configurations by yourself, you will learn a lots by "discovering" the files as an adventurer that is experiencing something new. One good way to start understanding the IBM/MQ DockerHub image is by listing the environment variables with:
+
+```bash
+env
+```
+
+Have fun!
+
+### Validating the created MQ components with RUNMQSC
+
+In order to interact with these components, feel free to open a terminal inside of the QMGR container, and then get the QMGR name with:
+
+```bash
+# Show the QMGR and its ports
+dspmq -all
+```
+
+Then, with the QMGR name, execute:
+
+```bash
+runmqsc MY_QMGR_DEV
+```
+
+We are now inside the "MQ Scripting Tool" (activated by the "runmqsc" command). We can no run:
+
+```bash
+# Show all details for the current QMGR
+DISPLAY QMGR ALL
+```
+
+```bash
+# Display all queues on the QMGR
+DISPLAY QUEUE(*)
+```
+
+```bash
+# Show config for our created queue (the one with the name "DEV.SANTI.QL.1")
+DISPLAY QUEUE(DEV.SANTI.QL.1)
+```
+
+```bash
+# Display all channels on the QMGR
+DISPLAY CHANNEL(*)
+```
+
+```bash
+# Show config for our created APP channel ("DEV.APP.SVRCONN")
+DISPLAY CHANNEL(DEV.APP.SVRCONN)
+```
+
+```bash
+# Show config for our created ADMIN channel ("DEV.ADMIN.SVRCONN")
+DISPLAY CHANNEL(DEV.ADMIN.SVRCONN)
 ```

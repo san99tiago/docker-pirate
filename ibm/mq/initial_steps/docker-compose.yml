@@ -7,8 +7,11 @@ services:
     environment:
       - LICENSE=accept
       - MQ_QMGR_NAME=MY_QMGR_DEV # Queue Manager name
-      - MQ_APP_PASSWORD=passw0rd # Password for the app-user
+      - MQ_ADMIN_PASSWORD=santi_admin_password # Password of the "admin" user
+      - MQ_APP_PASSWORD=santi_app_password # Password for the "app" user (DEV.APP.SVRCONN channel becomes)
       - MQ_ENABLE_METRICS=true # To enable Prometheus metrics (port 9157)
+      - MQ_DEV=true # Set this to false to stop default DEV objects being created
+      - MQ_ENABLE_EMBEDDED_WEB_SERVER=true # Set this to false if you do not need the web console
     ports:
       - "1414:1414"
       - "9443:9443"
@@ -27,7 +30,7 @@ services:
     environment:
       # Environment variables to authenticate to Java app for connecting to MQ
       - APP_USER=app
-      - APP_PASSWORD=passw0rd
+      - APP_PASSWORD=santi_app_password
     depends_on:
       - ibm_mq_santi
     networks:

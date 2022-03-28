@@ -43,7 +43,7 @@ public class JmsPutGet {
 	private static int status = 1;
 
 	// Create variables for the connection to MQ
-	private static final String HOST = "ibm_mq_santi_data"; // Host name or IP address
+	private static final String HOST = "ibm_mq_santi"; // Host name or IP address
 	private static final int PORT = 1414; // Listener port for your queue manager
 	private static final String CHANNEL = "DEV.APP.SVRCONN"; // Channel name
 	private static final String QMGR = "MY_QMGR_DEV"; // Queue manager name
