@@ -4,9 +4,9 @@
 
 This tutorials and playgrounds are inspired by:
 
-- (Install IBM MQ in a container | Set up messaging software in 4 minutes)[https://youtu.be/xBX1P9OUteg]
-- (IBM MQ Developer Essentials)[https://developer.ibm.com/learningpaths/ibm-mq-badge/]
-- (GitHub Repo: ibm-messaging/mq-container "developer config")[https://github.com/ibm-messaging/mq-container/blob/master/docs/developer-config.md]
+- [Install IBM MQ in a container | Set up messaging software in 4 minutes](https://youtu.be/xBX1P9OUteg)
+- [IBM MQ Developer Essentials](https://developer.ibm.com/learningpaths/ibm-mq-badge/)
+- [GitHub Repo: ibm-messaging/mq-container "developer config"](https://github.com/ibm-messaging/mq-container/blob/master/docs/developer-config.md)
 
 ## Overall functionalities explained
 
