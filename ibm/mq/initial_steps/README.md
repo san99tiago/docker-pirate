@@ -36,6 +36,8 @@ One important remark is that the Java application will be running "endlessly" an
 
 We can verify the correct functionalities by checking the logs of the java application or by going to the [IBM Console](https://localhost:9443/ibmmq/console) and checking the messages of the "DEV.SANTI.QL.1" (they should change constantly with the random messages generated at the app). <br>
 
+<br>
+
 Important notes about the "IBM Console" (after running  `docker-compose up --build`, you can play with this example):
 
 - The default url to access the console is: (https://localhost:9443/ibmmq/console).
@@ -46,6 +48,15 @@ Important notes about the "IBM Console" (after running  `docker-compose up --bui
 The messages added/deleted to the queue, should look like this one:
 
 **Santi says that your lucky number is: 537**
+
+It is important to notice that these messages can be seen in the docker-compose logs, or we can interact directly with them from the IBM MQ Web Console, with the following steps:
+
+- Entering to [IBM Console](https://localhost:9443/ibmmq/console).
+- Authenticating with Username `admin` and Password `santi_admin_password`.
+- Going to "Manage SANTI_QMGR".
+- Accessing to the queue "DEV.SANTI.QL.1".
+- Staying here and clicking "reload" option and enjoy as the app works by putting and getting messages (around every 10 seconds).
+
 
 <br>
 
@@ -70,7 +81,7 @@ The default most common paths to validate logs (and errors) is:
 
 ```bash
 # Queue Manager error log directory
-/var/mqm/qmgrs/MY_QMGR_DEV/errors/
+/var/mqm/qmgrs/SANTI_QMGR/errors/
 
 # System error and Client error log directories
 /var/mqm/errors/
@@ -104,17 +115,17 @@ dspmq -o all
 ### Starting/Stopping MQ manually
 
 ```bash
-strmqm MY_QMGR_DEV
+strmqm SANTI_QMGR
 ```
 
 ```bash
-endmqm MY_QMGR_DEV
+endmqm SANTI_QMGR
 ```
 
 ### Deleting MQ manually
 
 ```bash
-dltmqm MY_QMGR_DEV
+dltmqm SANTI_QMGR
 ```
 
 ### Understanding main Java processes related to the QGMR
@@ -149,7 +160,7 @@ dspmq -all
 Then, with the QMGR name, execute:
 
 ```bash
-runmqsc MY_QMGR_DEV
+runmqsc SANTI_QMGR
 ```
 
 We are now inside the "MQ Scripting Tool" (activated by the "runmqsc" command). We can no run:
@@ -175,11 +186,28 @@ DISPLAY CHANNEL(*)
 ```
 
 ```bash
-# Show config for our created APP channel ("DEV.APP.SVRCONN")
+# Show config for our created APP and ADMIN channels ("DEV.APP.SVRCONN" and "DEV.ADMIN.SVRCONN")
 DISPLAY CHANNEL(DEV.APP.SVRCONN)
+DISPLAY CHANNEL(DEV.ADMIN.SVRCONN)
 ```
 
 ```bash
-# Show config for our created ADMIN channel ("DEV.ADMIN.SVRCONN")
-DISPLAY CHANNEL(DEV.ADMIN.SVRCONN)
+# Show all channel auth
+DISPLAY CHLAUTH(*)
+```
+
+```bash
+# Show config for our chlauth for APP and ADMIN channels ("DEV.APP.SVRCONN" and "DEV.ADMIN.SVRCONN")
+DISPLAY CHLAUTH(DEV.APP.SVRCONN)
+DISPLAY CHLAUTH(DEV.ADMIN.SVRCONN)
+```
+
+```bash
+# Show all listeners on the QMGR
+DISPLAY LISTENER(*)
+```
+
+```bash
+# Show config for our created DEV listener ("DEV.LISTENER.TCP")
+DISPLAY LISTENER(DEV.LISTENER.TCP)
 ```

@@ -6,11 +6,11 @@ services:
     build: ./mq/
     environment:
       - LICENSE=accept
-      - MQ_QMGR_NAME=MY_QMGR_DEV # Queue Manager name
+      - MQ_QMGR_NAME=SANTI_QMGR # Queue Manager name
       - MQ_ADMIN_PASSWORD=santi_admin_password # Password of the "admin" user
       - MQ_APP_PASSWORD=santi_app_password # Password for the "app" user (DEV.APP.SVRCONN channel becomes)
       - MQ_ENABLE_METRICS=true # To enable Prometheus metrics (port 9157)
-      - MQ_DEV=true # Set this to false to stop default DEV objects being created
+      - MQ_DEV=false # Set this to false to stop default DEV objects being created (hardcore mode)
       - MQ_ENABLE_EMBEDDED_WEB_SERVER=true # Set this to false if you do not need the web console
     ports:
       - "1414:1414"

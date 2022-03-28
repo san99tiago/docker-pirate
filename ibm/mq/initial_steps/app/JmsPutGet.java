@@ -46,7 +46,7 @@ public class JmsPutGet {
 	private static final String HOST = "ibm_mq_santi"; // Host name or IP address
 	private static final int PORT = 1414; // Listener port for your queue manager
 	private static final String CHANNEL = "DEV.APP.SVRCONN"; // Channel name
-	private static final String QMGR = "MY_QMGR_DEV"; // Queue manager name
+	private static final String QMGR = "SANTI_QMGR"; // Queue manager name
 	private static final String APP_USER = System.getenv("APP_USER"); // User name that application uses to connect to MQ
 	private static final String APP_PASSWORD = System.getenv("APP_PASSWORD"); // Password that the application uses to connect to MQ
 	private static final String QUEUE_NAME = "DEV.SANTI.QL.1"; // Queue that the application uses to put and get messages to and from
