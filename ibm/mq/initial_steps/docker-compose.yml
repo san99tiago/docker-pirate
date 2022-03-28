@@ -1,8 +1,8 @@
 version: "3.8"
 
 services:
-  ibm_mq_santi_data:
-    container_name: my_ibm_mq_santi_data
+  ibm_mq_santi:
+    container_name: my_ibm_mq_santi
     build: ./mq/
     environment:
       - LICENSE=accept
@@ -29,7 +29,7 @@ services:
       - APP_USER=app
       - APP_PASSWORD=passw0rd
     depends_on:
-      - ibm_mq_santi_data
+      - ibm_mq_santi
     networks:
       - docker_pirate_net
     deploy:
