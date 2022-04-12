@@ -1,5 +1,7 @@
 FROM openjdk:8
 
+LABEL maintainer="Santiago Garcia Arango [san99tiago]"
+
 RUN mkdir -p /MQClient
 
 RUN  cd /MQClient &&\

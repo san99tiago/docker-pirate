@@ -1,0 +1,12 @@
+{
+  "host": "10.100.10.100",
+  "cloud": "AWS",
+  "OS": "Linux",
+  "owner": "Santiago Garcia Arango",
+  "server_name": "Server Test 1",
+  "messageInfo": {
+      "messageType": "INFO",
+      "messageValue": "Correct Initialization",
+      "date": "2022-02-26T18:28:30Z"
+  }
+}

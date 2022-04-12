@@ -1,0 +1,12 @@
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match": {"OS": "Linux"}
+      },
+      "filter": {
+        "term": {"host": "10.100.10.100"}
+      }
+    }
+  }
+}

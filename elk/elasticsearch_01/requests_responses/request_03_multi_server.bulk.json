@@ -1,0 +1,6 @@
+{ "index": { "_id": "my_server_3" } }
+{ "host": "127.0.0.1", "cloud": "AWS", "OS": "Linux", "owner": "Santiago Garcia", "server_name": "Amazing server 3", "type": "INFO", "value": "Well done is better than well said." } 
+{ "index": { "_id": "my_server_4" } }
+{ "host": "127.0.0.1", "cloud": "GCP", "OS": "Linux", "owner": "Santiago Garcia", "server_name": "Amazing server 4", "type": "ERROR", "value": "The master has failed more times than the beginner has ever tried." }
+{ "index": { "_id": "my_server_5" } }
+{ "host": "127.0.0.1", "cloud": "GCP", "OS": "Linux", "owner": "Santiago Garcia", "server_name": "Amazing server 5", "type": "INFO", "value": "Never stop working hard for your dreams." }

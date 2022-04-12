@@ -1,0 +1,30 @@
+# THESE ARE THE MAIN URLS DEFINED FOR THE POSTMAN COLLECTION
+# Santiago Garcia Arango
+# -----------------------------------------------------------
+
+URL for GET info of elasticsearch:
+http://localhost:9200
+
+URL for GET info of servers structure (mappings + aliases):
+http://localhost:9200/servers
+http://localhost:9200/servers/_mapping
+http://localhost:9200/servers/_alias
+http://localhost:9200/servers/_settings
+
+URL for GET all servers info:
+http://localhost:9200/servers/_search
+
+URL for GET a specific server info (with specific id):
+http://localhost:9200/servers/_doc/my_server_4
+
+URL for POST server X info:
+http://localhost:9200/servers/_doc
+
+URL for POST bulk (multiple) servers X,Y,Z.. info:
+http://localhost:9200/servers/_bulk
+
+URL for POST update server X info (with specific id):
+http://localhost:9200/servers/_update/my_server_3
+
+URL for DELETE server X (with specific id)
+http://localhost:9200/servers/_doc/my_server_5

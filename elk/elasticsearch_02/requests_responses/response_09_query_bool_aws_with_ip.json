@@ -1,0 +1,37 @@
+{
+    "took": 6,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 1,
+            "relation": "eq"
+        },
+        "max_score": 0.35667494,
+        "hits": [
+            {
+                "_index": "servers",
+                "_type": "_doc",
+                "_id": "Q_tdqn8Bpk4Q-zsrkbEr",
+                "_score": 0.35667494,
+                "_source": {
+                    "host": "10.100.10.100",
+                    "cloud": "AWS",
+                    "OS": "Linux",
+                    "owner": "Santiago Garcia Arango",
+                    "server_name": "Server Test 1",
+                    "messageInfo": {
+                        "messageType": "INFO",
+                        "messageValue": "Correct Initialization",
+                        "date": "2022-02-26T18:28:30Z"
+                    }
+                }
+            }
+        ]
+    }
+}

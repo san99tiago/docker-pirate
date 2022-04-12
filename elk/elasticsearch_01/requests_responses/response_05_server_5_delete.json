@@ -1,0 +1,14 @@
+{
+  "_index": "servers",
+  "_type": "_doc",
+  "_id": "my_server_5",
+  "_version": 2,
+  "result": "deleted",
+  "_shards": {
+      "total": 2,
+      "successful": 1,
+      "failed": 0
+  },
+  "_seq_no": 11,
+  "_primary_term": 1
+}

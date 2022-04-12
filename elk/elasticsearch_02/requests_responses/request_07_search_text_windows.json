@@ -1,0 +1,5 @@
+{
+  "query": {
+      "simple_query_string": {"query": "windows"}
+  }
+}
