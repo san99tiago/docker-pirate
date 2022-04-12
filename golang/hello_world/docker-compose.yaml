@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  go_app:
+    container_name: my_go_app
+    build: .
+    environment:
+      OWNER: "san99tiago"
+    # volumes:
+    #   - docker_pirate_go_app:/usr/src/app
+    networks:
+      - docker_pirate_net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+# volumes:
+#   docker_pirate_go_app:
+#     name: docker_pirate_go_app
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
