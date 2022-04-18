@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  prometheus:
+    container_name: my_prometheus
+    build: .
+    environment:
+      OWNER: "san99tiago"
+    ports:
+      - "9090:9090"
+    # command:
+    # - --config.file=/etc/prometheus/prometheus.yml
+    # volumes:
+    #   - docker_pirate_prometheus:/etc/prometheus/prometheus.yml
+    networks:
+      - docker_pirate_net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+# volumes:
+#   docker_pirate_prometheus:
+#     name: docker_pirate_prometheus
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net
