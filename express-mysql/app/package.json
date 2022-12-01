@@ -23,9 +23,9 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.20",
     "normalize-url": "^6.1.0",
-    "sonarqube-scanner": "^2.8.0"
+    "sonarqube-scanner": "^2.8.2"
   },
   "devDependencies": {
     "chai": "^4.3.4",
