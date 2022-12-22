@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/san99tiago/LEARNING_DOCKER#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mongodb": "^3.6.4"
   }
 }
