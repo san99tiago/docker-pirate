@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  mymongodb:
+    image: mongo
+    container_name: my_mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - example_mymongodb_volume:/data/db
+    networks:
+      - docker_pirate_net
+  mymongoexpress:
+    image: mongo-express
+    container_name: my_mongo_express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mymongodb
+    links:
+      - mymongodb
+    networks:
+      - docker_pirate_net
+
+volumes:
+  example_mymongodb_volume:
+    name: "example_mymongodb_volume"
+
+networks:
+  docker_pirate_net:
+    driver: bridge
+    name: docker_pirate_net

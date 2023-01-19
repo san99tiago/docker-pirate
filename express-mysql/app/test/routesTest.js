@@ -13,7 +13,7 @@ describe("Test routes for REST-API", () => {
     id: 1,
     id_type: "cc",
     id_value: "007",
-    name: "SuperSanti",
+    name: "GreatSanti",
     lastname: "SuperGarci",
     area: "DevOps",
     age: 99,
@@ -23,7 +23,7 @@ describe("Test routes for REST-API", () => {
     id: 1,
     id_type: "cc",
     id_value: "007",
-    name: "SuperSanti",
+    name: "GreatSanti",
   };
 
   const fakeDeveloper2 = {
