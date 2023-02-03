@@ -1,3 +1,9 @@
+### Own Ignores ###
+temp.sh
+test.sh
+temp.txt
+test.txt
+
 ### Flask ###
 instance/*
 !instance/.gitignore
