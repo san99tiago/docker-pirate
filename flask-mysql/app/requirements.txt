@@ -4,7 +4,7 @@ cffi==1.14.5
 chardet==4.0.0
 click==7.1.2
 cryptography==39.0.1
-Flask==1.1.2
+Flask==2.2.5
 Flask-RESTful==0.3.8
 idna==2.10
 itsdangerous==1.1.0
