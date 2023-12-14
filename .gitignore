@@ -3,6 +3,7 @@ temp.sh
 test.sh
 temp.txt
 test.txt
+.data
 
 ### Flask ###
 instance/*
