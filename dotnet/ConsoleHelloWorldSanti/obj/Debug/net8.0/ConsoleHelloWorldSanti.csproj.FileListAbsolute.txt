@@ -1,0 +1,15 @@
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/bin/Debug/net8.0/ConsoleHelloWorldSanti
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/bin/Debug/net8.0/ConsoleHelloWorldSanti.deps.json
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/bin/Debug/net8.0/ConsoleHelloWorldSanti.runtimeconfig.json
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/bin/Debug/net8.0/ConsoleHelloWorldSanti.dll
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/bin/Debug/net8.0/ConsoleHelloWorldSanti.pdb
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.AssemblyInfoInputs.cache
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.AssemblyInfo.cs
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.csproj.CoreCompileInputs.cache
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.sourcelink.json
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.dll
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/refint/ConsoleHelloWorldSanti.dll
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.pdb
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ConsoleHelloWorldSanti.genruntimeconfig.cache
+/workspaces/dot-net-hello-world/ConsoleHelloWorldSanti/obj/Debug/net8.0/ref/ConsoleHelloWorldSanti.dll

@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  dotnet_tests:
+    container_name: my_dotnet_tests
+    build:
+      context: ./
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 1G
