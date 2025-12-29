@@ -1,94 +1,201 @@
-// Function to validate that the message returned from SonarQube is ok
-def qualityGateValidation(qg) {
-  if (qg.status != 'OK') {
-    // emailext body: "WARNING SANTI: Code coverage is lower than 80% in Pipeline ${BUILD_NUMBER}", subject: 'Error Sonar Scan,   Quality Gate', to: "${EMAIL_ADDRESS}"
-    return true
-  }
-  // emailext body: "CONGRATS SANTI: Code coverage is higher than 80%  in Pipeline ${BUILD_NUMBER} - SUCCESS", subject: 'Info - Correct Pipeline', to: "${EMAIL_ADDRESS}"
-  return false
-}
 pipeline {
-  agent any
+    agent any
 
-  tools {
-      nodejs 'nodejs'
-  }
+    tools {
+        nodejs 'nodejs' 
+    }
 
-  environment {
-      // General Variables for Pipeline
-      PROJECT_ROOT = 'express-mysql/app'
-      EMAIL_ADDRESS = 'san99tiagodevsecops@gmail.com'
-      REGISTRY = 'san99tiago/docker-pirate-express'
-  }
+    environment {
+        PROJECT_ROOT = 'express-mysql/app'
+        REGISTRY = 'juan1202/docker-pirate-express'
+        SONAR_CRED_ID = 'sonar-token'
+        DOCKER_CRED_ID = 'dockerhub-creds'
+    }
 
-  stages {
-      stage('Hello') {
-        steps {
-          // First stage is a sample hello-world step to verify correct Jenkins Pipeline
-          echo 'Hello World, I am Happy'
-          echo 'This is my amazing Pipeline'
-        }
-      }
-      stage('Checkout') {
-        steps {
-        // Get Github repo using Github credentials (previously added to Jenkins credentials)
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/san99tiago/docker-pirate']]])        }
-      }
-      stage('Install dependencies') {
-        steps {
-          sh 'npm --version'
-          sh "cd ${PROJECT_ROOT}; npm install"
-        }
-      }
-      stage('Unit tests') {
-        steps {
-          // Run unit tests
-          sh "cd ${PROJECT_ROOT}; npm run test"
-        }
-      }
-      stage('Generate coverage report') {
-        steps {
-          // Run code-coverage reports
-          sh "cd ${PROJECT_ROOT}; npm run coverage"
-        }
-      }
-      stage('scan') {
-          environment {
-            // Previously defined in the Jenkins "Global Tool Configuration"
-            scannerHome = tool 'sonar-scanner'
-          }
-          steps {
-            // "sonarqube" is the server configured in "Configure System"
-            withSonarQubeEnv('sonarqube') {
-              // Execute the SonarQube scanner with desired flags
-              sh "${scannerHome}/bin/sonar-scanner \
-                          -Dsonar.projectKey=SimpleExpressExample:Test \
-                          -Dsonar.projectName=SimpleExpressExample \
-                          -Dsonar.projectVersion=0.0.${BUILD_NUMBER} \
-                          -Dsonar.host.url=http://mysonarqube:9000 \
-                          -Dsonar.sources=./${PROJECT_ROOT}/app.js,./${PROJECT_ROOT}/config/db.config.js,./${PROJECT_ROOT}/routes/developers.js \
-                          -Dsonar.login=admin \
-                          -Dsonar.password=admin \
-                          -Dsonar.tests=./${PROJECT_ROOT}/test \
-                          -Dsonar.javascript.lcov.reportPaths=./${PROJECT_ROOT}/coverage/lcov.info"
+    stages {
+        stage('Initialize') {
+            steps {
+                echo "Preparando entorno..."
+                // Limpiamos reportes anteriores para evitar confusiones
+                sh "rm -f zap_report.html kics-report.html dependency-check-report.xml"
+                sh "chmod -R 777 ."
             }
-            timeout(time: 3, unit: 'MINUTES') {
-              // In case of SonarQube failure or direct timeout exceed, stop Pipeline
-              waitForQualityGate abortPipeline: qualityGateValidation(waitForQualityGate())
+        }
+
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: '*/feature/configuracion-inicial-jenkins']], 
+                    extensions: [[$class: 'CloneOption', depth: 1, shallow: true, timeout: 30]], 
+                    userRemoteConfigs: [[url: 'https://github.com/Juan1202/docker-pirate.git']]
+                ])
             }
-          }
-      }
-      stage('Build docker-image') {
-        steps {
-          sh "cd ./${PROJECT_ROOT};docker build -t ${REGISTRY}:${BUILD_NUMBER} . "
         }
-      }
-      stage('Deploy docker-image') {
-        steps {
-          // If the Dockerhub authentication stopped, do it again
-          sh 'docker login'
-          sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
+
+        stage('Secret Scanning (TruffleHog)') {
+            steps {
+                script {
+                    echo "Buscando secretos en el código..."
+                    sh """
+                        docker run --rm -v \$(pwd):/proj trufflesecurity/trufflehog:latest filesystem /proj --only-verified
+                    """
+                }
+            }
         }
-      }
-  }
+
+        // --- NUEVA ETAPA: IaC SCANNING ---
+        stage('IaC Security (KICS)') {
+            steps {
+                script {
+                    echo "Analizando seguridad del Dockerfile e Infraestructura..."
+                    try {
+                        sh """
+                            docker run --rm -u root \
+                            -v \$(pwd):/path \
+                            checkmarx/kics:latest scan \
+                            -p /path \
+                            -o /path \
+                            --report-formats html \
+                            --output-name kics-report \
+                            --ignore-on-exit results
+                        """
+                    } catch (Exception e) {
+                        echo "KICS encontró problemas de seguridad en la infraestructura."
+                    }
+                }
+                publishHTML([
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: '.',
+                    reportFiles: 'kics-report.html',
+                    reportName: 'KICS IaC Report'
+                ])
+            }
+        }
+        // ---------------------------------
+
+        stage('Install dependencies') {
+            steps {
+                sh "cd ${PROJECT_ROOT} && npm install"
+            }
+        }
+
+        stage('Unit tests & Coverage') {
+            steps {
+                sh "cd ${PROJECT_ROOT} && npm run test"
+                sh "cd ${PROJECT_ROOT} && npm run coverage"
+            }
+        }
+
+        stage('SonarQube Scan') {
+            environment {
+                SCANNER_HOME = tool 'sonar-scanner'
+            }
+            steps {
+                withCredentials([string(credentialsId: "${SONAR_CRED_ID}", variable: 'SONAR_TOKEN')]) {
+                    withSonarQubeEnv('sonarqube') {
+                        sh """
+                            ${SCANNER_HOME}/bin/sonar-scanner \
+                            -Dsonar.projectKey=SimpleExpressExample:Test \
+                            -Dsonar.projectName=SimpleExpressExample \
+                            -Dsonar.projectVersion=0.0.${BUILD_NUMBER} \
+                            -Dsonar.sources=${PROJECT_ROOT}/app.js,${PROJECT_ROOT}/config/db.config.js,${PROJECT_ROOT}/routes/developers.js \
+                            -Dsonar.tests=${PROJECT_ROOT}/test \
+                            -Dsonar.token=${SONAR_TOKEN} \
+                            -Dsonar.javascript.lcov.reportPaths=${PROJECT_ROOT}/coverage/lcov.info
+                        """
+                    }
+                }
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage('OWASP Dependency-Check') {
+            steps {
+                script {
+                    try {
+                        dependencyCheck additionalArguments: """
+                            --scan ${PROJECT_ROOT} 
+                            --format HTML 
+                            --format XML 
+                            --out . 
+                            --noupdate
+                        """, 
+                        odcInstallation: 'dependency-check'
+                    } catch (Exception e) {
+                        echo "SCA finalizado."
+                    }
+                }
+                dependencyCheckPublisher(pattern: 'dependency-check-report.xml', stopBuild: false)
+            }
+        }
+
+        stage('Build docker-image') {
+            steps {
+                sh "cd ${PROJECT_ROOT} && docker build -t ${REGISTRY}:${BUILD_NUMBER} ."
+            }
+        }
+
+        stage('OWASP ZAP Scan (DAST)') {
+            steps {
+                script {
+                    // Limpieza preventiva para evitar conflicto de nombres
+                    sh "docker rm -f zap-test-app || true"
+                    
+                    sh "docker run -d --name zap-test-app -p 3001:3000 ${REGISTRY}:${BUILD_NUMBER}"
+                    sleep 25 
+                    
+                    try {
+                        def appIp = sh(script: "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' zap-test-app", returnStdout: true).trim()
+                        
+                        sh """
+                            docker run --rm --name zap-container \
+                            -u root \
+                            -v /var/jenkins_home/workspace/pipeline_juan:/zap/wrk/:rw \
+                            ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
+                            -t http://${appIp}:3000 \
+                            -r zap_report.html
+                        """
+                    } catch (Exception e) {
+                        echo "ZAP finalizó con hallazgos."
+                    } finally {
+                        sh "docker stop zap-test-app && docker rm zap-test-app"
+                        
+                        sh "find . -name 'zap_report.html' -exec cp {} . \\;"
+                        sh "chmod 777 zap_report.html || true"
+                        sh "chmod 777 kics-report.html || true" // Asegurar permisos para el reporte KICS
+                        
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: true,
+                            keepAll: true,
+                            reportDir: '.', 
+                            reportFiles: 'zap_report.html',
+                            reportName: 'OWASP ZAP Report'
+                        ])
+                    }
+                }
+            }
+        }
+
+        stage('Deploy docker-image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${DOCKER_CRED_ID}", passwordVariable: 'DOCKER_PWD', usernameVariable: 'DOCKER_USER')]) {
+                    sh "echo \$DOCKER_PWD | docker login -u \$DOCKER_USER --password-stdin"
+                    sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Limpieza final de seguridad: Borramos contenedores huérfanos si algo falló
+            sh "docker rm -f zap-test-app || true"
+            echo "Pipeline finalizado. Revisa los reportes de KICS, Sonar, Dependency-Check y ZAP."
+        }
+    }
 }

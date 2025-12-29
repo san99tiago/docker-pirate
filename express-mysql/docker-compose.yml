@@ -20,7 +20,7 @@ services:
           memory: 1G
   mysql_db:
     container_name: my_mysql_db
-    image: mysql:latest
+    image: mysql:8.0
     # Important command to allow legacy authentications for old versions
     command: --default-authentication-plugin=mysql_native_password
     restart: always

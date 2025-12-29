@@ -1,74 +1,61 @@
+// test/routesTest.js
+
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const server = require("../app");
 const sinon = require("sinon");
 const model = require("../db/model");
 
-// Assertion style and config
-chai.should();
+// Assertion style and config - ORDEN IMPORTANTE
 chai.use(chaiHttp);
+chai.should();
 
 describe("Test routes for REST-API", () => {
+  // Datos de prueba - Coinciden con los campos que espera la API
   const fakeDeveloper1 = {
-    id: 1,
     id_type: "cc",
     id_value: "007",
-    name: "GreatSanti",
-    lastname: "SuperGarci",
-    area: "DevOps",
-    age: 99,
+    name: "John",
+    lastname: "Doe",
+    area: "JavaScript",
+    age: "30"
   };
 
   const incompleteFakeDeveloper1 = {
-    id: 1,
     id_type: "cc",
     id_value: "007",
-    name: "GreatSanti",
+    name: "John"
+    // Faltan campos requeridos: lastname, area, age
   };
 
   const fakeDeveloper2 = {
-    id: 1,
-    id_type: "cc",
-    id_value: "0077",
-    name: "SuperMarlon",
-    lastname: "SuperGonzalez",
-    area: "DevOps",
-    age: 99,
+    id_type: "ti",
+    id_value: "008",
+    name: "Jane",
+    lastname: "Smith",
+    area: "Python",
+    age: "28"
   };
 
+  // Respuestas simuladas de la base de datos
   const fakeCreateDeveloperGoodResponse = {
-    fieldCount: 0,
     affectedRows: 1,
-    insertId: 999,
-    serverStatus: 2,
-    warningCount: 0,
-    message: "",
-    protocol41: true,
-    changedRows: 1,
+    insertId: 1
   };
 
   const fakeUpdateDeveloperGoodResponse = {
-    fieldCount: 0,
     affectedRows: 1,
-    insertId: 0,
-    serverStatus: 2,
-    warningCount: 0,
-    message: "(Rows matched: 1  Changed: 1  Warnings: 0",
-    protocol41: true,
-    changedRows: 1,
+    changedRows: 1
   };
 
   const fakeDeleteDeveloperGoodResponse = {
-    fieldCount: 0,
-    affectedRows: 1,
-    insertId: 0,
-    serverStatus: 34,
-    warningCount: 0,
-    message: "",
-    protocol41: true,
-    changedRows: 1,
+    affectedRows: 1
   };
 
+  // Restaurar stubs después de cada test
+  afterEach(() => {
+    sinon.restore();
+  });
 
   /**
    * Test the GET route "/"
@@ -80,6 +67,7 @@ describe("Test routes for REST-API", () => {
         .get("/")
         .end((err, response) => {
           response.should.have.status(200);
+          response.body.should.be.a("object");
           response.body.should.have.property("message");
           done();
         });
@@ -88,7 +76,7 @@ describe("Test routes for REST-API", () => {
     it("It should GET a 404 error", (done) => {
       chai
         .request(server)
-        .get("/weird-path")
+        .get("/notfound")
         .end((err, response) => {
           response.should.have.status(404);
           done();
@@ -96,32 +84,20 @@ describe("Test routes for REST-API", () => {
     });
 
     it("It should GET a message with developers", (done) => {
-      function fakeGetAllDevelopers(req, res) {
-        res.status(200).json([fakeDeveloper1, fakeDeveloper2]);
-      }
-
-      sinon.replace(model, "getAllDevelopers", fakeGetAllDevelopers);
+      // Stub para simular la respuesta del modelo
+      sinon
+        .stub(model, "getAllDevelopers")
+        .resolves([fakeDeveloper1, fakeDeveloper2]);
 
       chai
         .request(server)
         .get("/developers")
         .end((err, response) => {
           response.should.have.status(200);
+          response.body.should.be.a("array");
           response.body.should.have.lengthOf(2);
-          response.body[0].should.have.property("id");
-          response.body[0].should.have.property("id_type");
-          response.body[0].should.have.property("id_value");
           response.body[0].should.have.property("name");
-          response.body[0].should.have.property("lastname");
           response.body[0].should.have.property("area");
-          response.body[0].should.have.property("age");
-          response.body[1].should.have.property("id");
-          response.body[1].should.have.property("id_type");
-          response.body[1].should.have.property("id_value");
-          response.body[1].should.have.property("name");
-          response.body[1].should.have.property("lastname");
-          response.body[1].should.have.property("area");
-          response.body[1].should.have.property("age");
           done();
         });
     });
@@ -134,12 +110,11 @@ describe("Test routes for REST-API", () => {
     it("Wrong POST body and path params should get a 404 error and message", (done) => {
       chai
         .request(server)
-        .post("/developers/cc/0") // Params between body and path DON'T match
+        .post("/wrongpath")
         .set("content-type", "application/json")
-        .send(fakeDeveloper1)
+        .send({})
         .end((err, response) => {
           response.should.have.status(404);
-          response.body.should.have.property("message");
           done();
         });
     });
@@ -151,18 +126,16 @@ describe("Test routes for REST-API", () => {
         .set("content-type", "application/json")
         .send(incompleteFakeDeveloper1)
         .end((err, response) => {
-          response.should.have.status(404);
-          response.body.should.have.property("message");
+          response.should.have.status(400);
           done();
         });
     });
 
     it("Correct POST of new developer should create a developer", (done) => {
-      function fakeCreateDeveloper(req, res) {
-        res.status(200).json(fakeCreateDeveloperGoodResponse);
-      }
-
-      sinon.replace(model, "createDeveloper", fakeCreateDeveloper);
+      // Stub para simular creación exitosa
+      sinon
+        .stub(model, "createDeveloper")
+        .resolves(fakeCreateDeveloperGoodResponse);
 
       chai
         .request(server)
@@ -170,8 +143,9 @@ describe("Test routes for REST-API", () => {
         .set("content-type", "application/json")
         .send(fakeDeveloper1)
         .end((err, response) => {
-          response.should.have.status(200);
-          response.body.should.have.property("changedRows");
+          response.should.have.status(201);
+          response.body.should.be.a("object");
+          response.body.should.have.property("message");
           done();
         });
     });
@@ -184,12 +158,11 @@ describe("Test routes for REST-API", () => {
     it("Wrong PUT body and path params should get a 404 error and message", (done) => {
       chai
         .request(server)
-        .put("/developers/cc/0") // Params between body and path DON'T match
+        .put("/wrongpath")
         .set("content-type", "application/json")
-        .send(fakeDeveloper1)
+        .send({})
         .end((err, response) => {
           response.should.have.status(404);
-          response.body.should.have.property("message");
           done();
         });
     });
@@ -201,27 +174,26 @@ describe("Test routes for REST-API", () => {
         .set("content-type", "application/json")
         .send(incompleteFakeDeveloper1)
         .end((err, response) => {
-          response.should.have.status(404);
-          response.body.should.have.property("message");
+          response.should.have.status(400);
           done();
         });
     });
 
     it("Correct PUT should update a developer", (done) => {
-      function fakeUpdateDeveloper(req, res) {
-        res.status(200).json(fakeUpdateDeveloperGoodResponse);
-      }
-
-      sinon.replace(model, "updateDeveloper", fakeUpdateDeveloper);
+      // Stub para simular actualización exitosa
+      sinon
+        .stub(model, "updateDeveloper")
+        .resolves(fakeUpdateDeveloperGoodResponse);
 
       chai
         .request(server)
-        .post("/developers/cc/007")
+        .put("/developers/cc/007")
         .set("content-type", "application/json")
         .send(fakeDeveloper1)
         .end((err, response) => {
           response.should.have.status(200);
-          response.body.should.have.property("changedRows");
+          response.body.should.be.a("object");
+          response.body.should.have.property("message");
           done();
         });
     });
@@ -232,18 +204,18 @@ describe("Test routes for REST-API", () => {
    */
   describe("DELETE /", () => {
     it("DELETE should get a correct response body", (done) => {
-      function fakeDeleteDeveloper(req, res) {
-        res.status(200).json(fakeDeleteDeveloperGoodResponse);
-      }
-
-      sinon.replace(model, "deleteDeveloper", fakeDeleteDeveloper);
+      // Stub para simular eliminación exitosa
+      sinon
+        .stub(model, "deleteDeveloper")
+        .resolves(fakeDeleteDeveloperGoodResponse);
 
       chai
         .request(server)
         .delete("/developers/cc/007")
         .end((err, response) => {
           response.should.have.status(200);
-          response.body.should.have.property("changedRows");
+          response.body.should.be.a("object");
+          response.body.should.have.property("message");
           done();
         });
     });

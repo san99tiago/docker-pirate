@@ -1,114 +1,127 @@
+// db/model.js
+
+// Importamos el Pool de conexiones que ya configuramos con mysql2/promise
+// Es crucial que 'dbConn' apunte al Pool/Conexión correcta con soporte para Promesas.
 const dbConn = require("../config/db.config");
 
 const model = {
-  getAllDevelopers(req, res) {
-    const queryString = "SELECT * FROM developers";
-    dbConn.query(queryString, (err, rows, fields) => {
-      if (err) {
-        console.log("Failed to query, err: ", err);
-        res.status(404).end();
-        return;
-      }
-      res.status(200).json(rows);
-    });
-  },
+    // ----------------------------------------------------------------------
+    // 1. OBTENER TODOS LOS DESARROLLADORES (GET ALL)
+    // Se usa 'async' y se reemplaza 'req, res' por el retorno directo de datos.
+    // ----------------------------------------------------------------------
+    async getAllDevelopers() {
+        const queryString = "SELECT * FROM developers";
+        
+        // La función ahora lanza una excepción si hay un error, 
+        // y si es exitosa, retorna los datos.
+        try {
+            // Usamos execute para consultas SELECT/INSERT/UPDATE/DELETE
+            const [rows] = await dbConn.execute(queryString);
+            return rows;
+        } catch (err) {
+            // Lanzamos el error para que la capa superior (Routes) lo maneje
+            console.error("Failed to query getAllDevelopers, err: ", err.message);
+            throw new Error("Database query failed");
+        }
+    },
 
-  getDeveloperByIdParams(req, res, idType, idValue) {
-    const queryString =
-      "SELECT * FROM developers WHERE (id_type = ? AND id_value = ?)";
+    // ----------------------------------------------------------------------
+    // 2. OBTENER DESARROLLADOR POR ID (GET BY ID)
+    // ----------------------------------------------------------------------
+    async getDeveloperByIdParams(idType, idValue) { // Ya no recibe req, res
+        const queryString =
+            "SELECT * FROM developers WHERE id_type = ? AND id_value = ?";
+        
+        try {
+            // Los parámetros se pasan como un array en el segundo argumento de execute
+            const [rows] = await dbConn.execute(queryString, [idType, idValue]);
+            return rows;
+        } catch (err) {
+            console.error("Failed to query getDeveloperByIdParams, err: ", err.message);
+            throw new Error("Database query failed");
+        }
+    },
 
-    dbConn.query(queryString, [idType, idValue], (err, rows, fields) => {
-      if (err) {
-        console.log("Failed to query, err: ", err);
-        res.status(404).send('{"message":"Failed to query}');
-        return;
-      }
-      res.status(200).json(rows);
-    });
-  },
+    // ----------------------------------------------------------------------
+    // 3. CREAR DESARROLLADOR (POST)
+    // El código original tenía dos queries anidadas (Buscar y Luego Insertar).
+    // Con async/await, las hacemos secuenciales y planas (más legible).
+    // ----------------------------------------------------------------------
+    async createDeveloper(developerData) { // Recibe un objeto con los datos
+        const checkQuery = "SELECT * FROM developers WHERE id_type = ? AND id_value = ?";
+        
+        try {
+            // 1. Buscar si ya existe
+            const [existingRows] = await dbConn.execute(checkQuery, [
+                developerData.id_type,
+                developerData.id_value,
+            ]);
 
-  createDeveloper(req, res) {
-    let queryString =
-      "SELECT * FROM developers WHERE (id_type = ? AND id_value = ?)";
+            if (existingRows.length) {
+                // Usamos un Error personalizado para que la capa de Routes sepa que existe
+                throw new Error("Developer already exists");
+            }
 
-    dbConn.query(
-      queryString,
-      [req.body.id_type, req.body.id_value],
-      (err1, rows1, fields1) => {
-        if (err1) {
-          console.log("Failed to query, err1: ", err1);
-          res.status(404).send('{"message":"Failed to query}');
-          return;
-        }
-        if (rows1 && rows1.length) {
-          console.log("Developer already exists.");
-          res.status(404).send('{"message":"Developer already exists"}');
-          return;
-        }
+            // 2. Insertar el nuevo desarrollador
+            const insertQuery =
+                "INSERT INTO developers (id_type, id_value, name, lastname, area, age) VALUES (?, ?, ?, ?, ?, ?)";
+            
+            const [insertResult] = await dbConn.execute(insertQuery, [
+                developerData.id_type,
+                developerData.id_value,
+                developerData.name,
+                developerData.lastname,
+                developerData.area,
+                developerData.age,
+            ]);
 
-        queryString =
-          "INSERT INTO developers (id_type, id_value, name, lastname, area, age) VALUES (?, ?, ?, ?, ?, ?)";
-        dbConn.query(
-          queryString,
-          [
-            req.body.id_type,
-            req.body.id_value,
-            req.body.name,
-            req.body.lastname,
-            req.body.area,
-            req.body.age,
-          ],
-          (err2, rows2, fields2) => {
-            if (err2) {
-              console.log("Failed to query, err2: ", err2);
-              res.status(404).send();
-              return;
-            }
-            res.status(200).json(rows2);
-          }
-        );
-      }
-    );
-  },
+            // Retornamos el resultado de la inserción (contiene 'affectedRows')
+            return insertResult;
 
-  updateDeveloper(req, res) {
-    const queryString =
-      "UPDATE developers SET name = ?, lastname = ?, area = ?, age = ? WHERE (id_type = ? AND id_value = ?)";
+        } catch (err) {
+            console.error("Failed to createDeveloper: ", err.message);
+            throw err; // Lanzar el error para que la capa superior lo capture
+        }
+    },
 
-    dbConn.query(
-      queryString,
-      [
-        req.body.name,
-        req.body.lastname,
-        req.body.area,
-        req.body.age,
-        req.body.id_type,
-        req.body.id_value,
-      ],
-      (err, rows, fields) => {
-        if (err) {
-          console.log("Failed to query, err: ", err);
-          res.status(404).send('{"message":"Failed to query}');
-          return;
-        }
-        res.status(200).json(rows);
-      }
-    );
-  },
+    // ----------------------------------------------------------------------
+    // 4. ACTUALIZAR DESARROLLADOR (PUT)
+    // ----------------------------------------------------------------------
+    async updateDeveloper(developerData) { // Recibe un objeto con todos los datos
+        const queryString =
+            "UPDATE developers SET name = ?, lastname = ?, area = ?, age = ? WHERE id_type = ? AND id_value = ?";
 
-  deleteDeveloper(req, res, idType, idValue) {
-    const queryString =
-      "DELETE FROM developers WHERE (id_type = ? AND id_value = ?)";
+        try {
+            const [result] = await dbConn.execute(queryString, [
+                developerData.name,
+                developerData.lastname,
+                developerData.area,
+                developerData.age,
+                developerData.id_type,
+                developerData.id_value,
+            ]);
+            return result;
+        } catch (err) {
+            console.error("Failed to updateDeveloper, err: ", err.message);
+            throw new Error("Database query failed");
+        }
+    },
 
-    dbConn.query(queryString, [idType, idValue], (err, rows, fields) => {
-      if (err) {
-        console.log("Failed to query, err: ", err);
-        res.status(404).send('{"message":"Failed to query}');
-        return;
-      }
-      res.status(200).json(rows);
-    });
-  },
+    // ----------------------------------------------------------------------
+    // 5. ELIMINAR DESARROLLADOR (DELETE)
+    // ----------------------------------------------------------------------
+    async deleteDeveloper(idType, idValue) { // Ya no recibe req, res
+        const queryString =
+            "DELETE FROM developers WHERE id_type = ? AND id_value = ?";
+        
+        try {
+            const [result] = await dbConn.execute(queryString, [idType, idValue]);
+            return result; // Contiene 'affectedRows'
+        } catch (err) {
+            console.error("Failed to deleteDeveloper, err: ", err.message);
+            throw new Error("Database query failed");
+        }
+    },
 };
 
 module.exports = model;

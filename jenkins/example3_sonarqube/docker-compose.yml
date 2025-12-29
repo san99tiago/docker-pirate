@@ -1,58 +1,62 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  myjenkins:
-    container_name: my_custom_jenkins
-    image: jenkins/jenkins:lts
+  jenkins:
+    build: . # <--- CRÍTICO: Ahora sí usará tu Dockerfile
+    container_name: jenkins-compose
+    restart: always
     user: root
-    environment:
-      MY_NAME: "santi_devops"
-      # Gmail extra configuration for mailer plugin
-      JAVA_OPTS: "-Djava.awt.headless=true -Dmail.smtp.starttls.enable=true"
-      SONARQUBE_HOST: mysonarqube
+    privileged: true
     ports:
-      - "8080:8080"
+      - "8088:8080"
       - "50000:50000"
     volumes:
-      # Named  Docker volume details at the bottom
       - jenkins_home:/var/jenkins_home
-      # WARNING:
+      # Mantenemos el socket, pero quitamos el /usr/bin/docker porque ya lo instalamos arriba
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - net_devops
-    deploy:
-      resources:
-        limits:
-          cpus: "2"
-          memory: 2G
-  mysonarqube:
-    container_name: my_custom_sonarqube
-    # build: ./sonarqube_home
-    image: sonarqube:7.9.5-community
+      - devops-net
+
+  postgres:
+    # ... (se mantiene igual)
+    image: postgres:14-alpine
+    container_name: sonarqube-db
     environment:
-      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar_password
+      - POSTGRES_DB=sonarqube
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+    networks:
+      - devops-net
+
+  sonarqube:
+    # ... (se mantiene igual)
+    image: sonarqube:2025.1-community
+    container_name: sonarqube
+    depends_on:
+      - postgres
     ports:
       - "9000:9000"
-    networks:
-      - net_devops
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://postgres:5432/sonarqube
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=sonar_password
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true 
     volumes:
-      - ./sonarqube_home/conf/:/opt/sonarqube/conf
-      - ./sonarqube_home/data/:/opt/sonarqube/data
-      - ./sonarqube_home/logs/:/opt/sonarqube/logs
-      - ./sonarqube_home/extensions/:/opt/sonarqube/extensions
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "2"
-          memory: 3G
+      - sonarqube_data:/opt/sonarqube/data 
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    networks:
+      - devops-net
 
-# To use docker-volume (custom_jenkins_home) instead of a directory path-file
 volumes:
   jenkins_home:
-    name: "custom_jenkins_home"
+  postgres_data:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
 
 networks:
-  net_devops:
+  devops-net:
     driver: bridge
-    name: net_devops
